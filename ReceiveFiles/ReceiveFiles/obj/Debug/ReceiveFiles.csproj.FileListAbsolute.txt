@@ -1,0 +1,24 @@
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\ReceiveFiles\ReceiveFiles\bin\Debug\ReceiveFiles.exe
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\ReceiveFiles\ReceiveFiles\bin\Debug\ReceiveFiles.pdb
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.Form1.resources
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.Properties.Resources.resources
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.csproj.GenerateResource.Cache
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.exe
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.pdb
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.exe
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.pdb
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\Session2\ReceiveFiles\ReceiveFiles\bin\Debug\ReceiveFiles.exe
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\Session2\ReceiveFiles\ReceiveFiles\bin\Debug\ReceiveFiles.pdb
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.Properties.Resources.resources
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.csproj.GenerateResource.Cache
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.Form1.resources
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانية\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.csprojResolveAssemblyReference.cache
+C:\Users\baraa\Desktop\Session2\ReceiveFiles\ReceiveFiles\bin\Debug\ReceiveFiles.exe
+C:\Users\baraa\Desktop\Session2\ReceiveFiles\ReceiveFiles\bin\Debug\ReceiveFiles.pdb
+C:\Users\baraa\Desktop\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.csprojResolveAssemblyReference.cache
+C:\Users\baraa\Desktop\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.Form1.resources
+C:\Users\baraa\Desktop\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.Properties.Resources.resources
+C:\Users\baraa\Desktop\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.csproj.GenerateResource.Cache
+C:\Users\baraa\Desktop\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.csproj.CoreCompileInputs.cache
+C:\Users\baraa\Desktop\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.exe
+C:\Users\baraa\Desktop\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.pdb

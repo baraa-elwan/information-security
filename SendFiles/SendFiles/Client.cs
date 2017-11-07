@@ -58,7 +58,7 @@ namespace SendFiles
                 
               
             }
-            catch (Exception ex)
+            catch
             {
 
             }
@@ -94,15 +94,7 @@ namespace SendFiles
               
             writer.Close();
         }
-        public static byte[] getBytes(String str)
-        {
-            return Encoding.UTF8.GetBytes(str);
-        }
-
-        public static String getString(byte[] bytes)
-        {
-            return Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-        }
+       
 
     }
 }

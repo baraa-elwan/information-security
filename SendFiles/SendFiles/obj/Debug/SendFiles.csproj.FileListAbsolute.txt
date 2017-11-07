@@ -30,3 +30,17 @@ C:\Users\baraa\Desktop\Session2\SendFiles\SendFiles\obj\Debug\SendFiles.csproj.G
 C:\Users\baraa\Desktop\Session2\SendFiles\SendFiles\obj\Debug\SendFiles.csproj.CoreCompileInputs.cache
 C:\Users\baraa\Desktop\Session2\SendFiles\SendFiles\obj\Debug\SendFiles.exe
 C:\Users\baraa\Desktop\Session2\SendFiles\SendFiles\obj\Debug\SendFiles.pdb
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\bin\Debug\SendFiles.exe.config
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\bin\Debug\SendFiles.exe
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\bin\Debug\SendFiles.pdb
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\bin\Debug\ReceiveFiles.exe
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\bin\Debug\System.Data.DataSetExtensions.dll
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\bin\Debug\ReceiveFiles.pdb
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\bin\Debug\System.Data.DataSetExtensions.xml
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\obj\Debug\SendFiles.csprojResolveAssemblyReference.cache
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\obj\Debug\SendFiles.Form1.resources
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\obj\Debug\SendFiles.Properties.Resources.resources
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\obj\Debug\SendFiles.csproj.GenerateResource.Cache
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\obj\Debug\SendFiles.csproj.CoreCompileInputs.cache
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\obj\Debug\SendFiles.exe
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\SendFiles\SendFiles\obj\Debug\SendFiles.pdb

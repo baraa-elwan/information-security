@@ -80,7 +80,7 @@ namespace SendFiles
 
         public void SendTCP(string M, string IPA, Int32 PortN)
         {
-            byte[] SendingBuffer = null;
+            
             TcpClient mclient = this.client.socket;
             lblStatus.Text = "";
             NetworkStream netstream = mclient.GetStream();
@@ -93,7 +93,7 @@ namespace SendFiles
                 String data = File.ReadAllText(SendingFilePath, Encoding.GetEncoding(20127));
 
                 int keySize = Int32.Parse(numericUpDown1.Value.ToString());
-                String encrypted =  AsymmetricEncryption.EncryptText(data, keySize, key);
+                String encrypted =  getString(AsymmetricEncryption.PGPEncrypt(data, keySize, key));
 
                // MessageBox.Show(encrypted);
 
@@ -193,7 +193,7 @@ namespace SendFiles
                 byte[] req =new byte[4];
                 client.socket.Client.Receive(req);
 
-                if (Client.getString(req).Equals("send"))
+                if (getString(req).Equals("send"))
                 {
                     string message = "Accept the Incoming File ";
                     string caption = "Incoming Connection";
@@ -206,18 +206,7 @@ namespace SendFiles
                         string SaveFileName = string.Empty;
                         StreamWriter stream = new StreamWriter(client.socket.GetStream());
                         stream.Write(1);
-
-                        byte[] msg;
-                        //client.socket.Client.Receive(msg);
-                        //SaveFileDialog DialogSave = new SaveFileDialog();
-                        //DialogSave.Filter = "All files (*.*)|*.*";
-                        //DialogSave.RestoreDirectory = true;
-                        //DialogSave.Title = "Where do you want to save the file?";
-                        //DialogSave.InitialDirectory = @"C:/";
-                        //var test = DialogSave.ShowDialog();
-                        //if (test == DialogResult.OK)
-                        //    SaveFileName = DialogSave.FileName;
-                        int RecBytes = 0;
+                      
                         byte[] RecData;//= new byte[BufferSize];
                         NetworkStream netstream = client.socket.GetStream();
                         BinaryReader streamR = new BinaryReader(netstream);
@@ -226,28 +215,14 @@ namespace SendFiles
 
                         SaveFileName = "C:/test.txt";
 
-
-                        byte[] key = new byte[8];
-                        byte[] ms = new byte[RecData.Length - 8];
-                        Array.Copy( RecData, key, 8);
-
-                       byte[] dec = AsymmetricEncryption.Decrypt(key, 1024, publicAndPrivateKey);
-
-                       Array.Copy( RecData, key, 8);
-
-                         Array.Copy(RecData, 8, ms, 0, ms.Length);
-
-                        SymmetricEncryption symmetric = new SymmetricEncryption();
-                        symmetric.key = key;
-
-                        String res = symmetric.decrypt_data(ms);
+                       String res =  AsymmetricEncryption.PGPDecrypt(RecData, publicAndPrivateKey);
 
                         FileStream Fs = new FileStream(SaveFileName, FileMode.OpenOrCreate, FileAccess.Write);
 
-                        Fs.Write(Client.getBytes(res), 0, Client.getBytes(res).Length);
+                        byte[] resBytes = getBytes(res);
+                        Fs.Write(resBytes, 0, resBytes.Length);
                         Fs.Close();
-                       // netstream.Close();
-                       // client.Close();
+                       
 
                     }
                 }
@@ -272,6 +247,16 @@ namespace SendFiles
         {
               reciever =  list_Clients.SelectedIndex;
 
+        }
+
+        public static byte[] getBytes(String str)
+        {
+            return Encoding.UTF8.GetBytes(str);
+        }
+
+        public static String getString(byte[] bytes)
+        {
+            return Encoding.UTF8.GetString(bytes, 0, bytes.Length);
         }
     }
 }

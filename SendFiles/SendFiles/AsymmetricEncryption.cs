@@ -26,29 +26,56 @@ namespace SendFiles
             return Convert.ToBase64String(encrypted);
         }
 
+        public static byte[] PGPEncrypt(string message, int keySize, string publicKeyXml)
+        {
+            //TODO
+            byte[] data = System.Text.Encoding.UTF8.GetBytes(message);
+            SymmetricEncryption encryption = new SymmetricEncryption();
+            byte[] encrypted = encryption.encrypt_data(data);
+            byte[] key;
+            using (var provider = new RSACryptoServiceProvider(keySize))
+            {
+                provider.FromXmlString(publicKeyXml);
+                key = provider.Encrypt(encryption.key, _optimalAsymmetricEncryptionPadding);
+
+                byte[] msg = new byte[key.Length + encrypted.Length];
+                key.CopyTo(msg, 0);
+                encrypted.CopyTo(msg, key.Length);
+                return msg;
+            }
+           
+        }
+
+        public static String PGPDecrypt(byte[] msg, string publicAndPrivateKey)
+        {
+            //TODO
+
+            byte[] key = new byte[8];
+            byte[] ms = new byte[msg.Length - 8];
+            Array.Copy(msg, key, 8);
+
+            byte[] dec = AsymmetricEncryption.Decrypt(key, 1024, publicAndPrivateKey);
+
+            Array.Copy(msg, key, 8);
+
+            Array.Copy(msg, 8, ms, 0, ms.Length);
+
+            SymmetricEncryption symmetric = new SymmetricEncryption();
+            symmetric.key = key;
+
+            String res = symmetric.decrypt_data(ms);
+
+            return res;
+        }
+
+
         public static byte[] Encrypt(byte[] data, int keySize, string publicKeyXml)
         {
             if (data == null || data.Length == 0) throw new ArgumentException("Data are empty", "data");
             int maxLength = GetMaxDataLength(keySize);
             if (data.Length > maxLength)
                 throw new ArgumentException(String.Format("Maximum data length is {0}", maxLength), "data");
-            //TODO
-            //{
-            //    SymmetricEncryption encryption = new SymmetricEncryption();
-            //    byte[] encrypted = encryption.encrypt_data(data);
-            //    byte[] key;
-            //    using (var provider = new RSACryptoServiceProvider(keySize))
-            //    {
-            //        provider.FromXmlString(publicKeyXml);
-            //        key = provider.Encrypt(encryption.key, _optimalAsymmetricEncryptionPadding);
 
-            //        byte[] msg = new byte[key.Length + encrypted.Length];
-            //        key.CopyTo(msg, 0);
-            //        encrypted.CopyTo(msg, key.Length);
-            //        return msg;
-            //    }
-            //    //throw new ArgumentException(String.Format("Maximum data length is {0}", maxLength), "data");
-            //}
             if (!IsKeySizeValid(keySize)) throw new ArgumentException("Key size is not valid", "keySize");
             if (String.IsNullOrEmpty(publicKeyXml)) throw new ArgumentException("Key is null or empty", "publicKeyXml");
 

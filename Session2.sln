@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReceiveFiles", "ReceiveFiles\ReceiveFiles\ReceiveFiles.csproj", "{49FADF7B-B738-495A-A37E-DF957D7E7C07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "ReceiveFiles\ReceiveFiles\Server.csproj", "{49FADF7B-B738-495A-A37E-DF957D7E7C07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendFiles", "SendFiles\SendFiles\SendFiles.csproj", "{CBF95D7D-4376-4B61-89E2-A0168D5AFEF8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "SendFiles\SendFiles\Client.csproj", "{CBF95D7D-4376-4B61-89E2-A0168D5AFEF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F0FD4B84-07F2-4B29-8CEF-674BC6C398FC}
 	EndGlobalSection
 EndGlobal

@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.IO;
-namespace SendFiles
+namespace Client
 {
     class SymmetricEncryption
     {
 
         AesCryptoServiceProvider aes;
 
-       public byte[] key {
+        public byte[] key
+        {
             set { }
             get { return aes.Key; }
         }
-      
-
 
         public SymmetricEncryption()
         {
-             aes = new AesCryptoServiceProvider();
-             aes.GenerateKey();
+            aes = new AesCryptoServiceProvider();
+            aes.GenerateKey();
             aes.IV = System.Text.Encoding.UTF8.GetBytes("1234567891234567");
         }
 
@@ -39,9 +38,9 @@ namespace SendFiles
 
             StreamWriter st = new StreamWriter(cryptoStream);
 
-           
 
-            cryptoStream.Write( data, 0, data.Length);
+
+            cryptoStream.Write(data, 0, data.Length);
             cryptoStream.FlushFinalBlock();
 
             encrypted = mem_stream.ToArray();
@@ -50,14 +49,13 @@ namespace SendFiles
 
         }
 
-
         public String decrypt_data(byte[] data)
         {
             string plaintext = null;
 
             //class for aes algorithm
-          
-            
+
+
 
             aes.Padding = PaddingMode.Zeros;
             //
@@ -69,14 +67,10 @@ namespace SendFiles
             MemoryStream mem_stream = new MemoryStream(data);
 
             CryptoStream cryptoStream = new CryptoStream(mem_stream, decryptor, CryptoStreamMode.Read);
+
             StreamReader st = new StreamReader(cryptoStream);
 
-
-
             plaintext = st.ReadToEnd();
-
-
-
 
             return plaintext;
         }

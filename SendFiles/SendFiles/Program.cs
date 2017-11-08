@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Security.Cryptography;
 
-namespace SendFiles
+namespace Client
 {
     static class Program
     {

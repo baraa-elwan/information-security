@@ -15,7 +15,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 //using System.Runtime.Serialization.Formatters.Soap;
 
-namespace ReceiveFiles
+namespace Server
 {
 
     public partial class Form1 : Form
@@ -57,23 +57,6 @@ namespace ReceiveFiles
             listBox1.DataSource = data;
         }
 
-        //send clients list
-        public void SendToClient(TcpClient client)
-        {
-            BinaryWriter writer = new BinaryWriter(client.GetStream());
-            writer.Write(data.Count);
-            foreach (SomeData d in data)
-            {
-                writer.Write(d.Text);
-                writer.Write(d.Value);
-            }
-
-            writer.Flush();
-        }
-
-       
-
-        //listening to clients
         public void ReceiveTCP(int portN)
         {
             
@@ -85,6 +68,7 @@ namespace ReceiveFiles
             {
                 Console.WriteLine(ex.Message);
             }
+
             for (; ; )
             {
                 Status = String.Empty;
@@ -110,6 +94,7 @@ namespace ReceiveFiles
             BinaryReader reader = new BinaryReader(stream);
 
             int option = reader.ReadInt32();
+
             if (option == 1)
             {
                 SomeData itm = new SomeData();
@@ -126,14 +111,13 @@ namespace ReceiveFiles
             {
                 try
                 {
-                   
                     option = reader.ReadInt32();
 
                     if (option == 2)
                     {
                         byte[] b = getBytes("lst");
                         mClient.Client.Send(b);
-                        SendToClient(mClient);
+                       Server.SendToClient(mClient, data);
                     }
 
                    else  if (option == 3)
@@ -145,15 +129,10 @@ namespace ReceiveFiles
                         byte[] msg = reader.ReadBytes(dataLen);
 
                         TcpClient reciever = clients[recev];
-                        SocketAsyncEventArgs e = new SocketAsyncEventArgs();
-
-                        //TODO sende request and wait for answer
-                        //  
-                       // reciever.Client.Send(getBytes("send"));
 
                         NetworkStream rec = reciever.GetStream();
-                        rec.Write(getBytes("msg"), 0, 3);
-                        BinaryReader recRead = new BinaryReader(rec);
+
+                        reciever.Client.Send(getBytes("msg"));
 
                        
                         BinaryWriter recW= new BinaryWriter(rec);

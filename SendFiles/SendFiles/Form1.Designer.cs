@@ -1,4 +1,4 @@
-namespace SendFiles
+namespace Client
 {
     partial class Form1
     {

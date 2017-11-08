@@ -1,4 +1,4 @@
-namespace ReceiveFiles
+namespace Server
 {
     partial class Form1
     {

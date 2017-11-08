@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace SendFiles
+namespace Client
 {
     public static class AsymmetricEncryption
     {
         private static bool _optimalAsymmetricEncryptionPadding = false;
 
+        #region generate public and private keys
         public static void GenerateKeys(int keySize, out string publicKey, out string publicAndPrivateKey)
         {
             using (var provider = new RSACryptoServiceProvider(keySize))
@@ -19,13 +20,9 @@ namespace SendFiles
                 publicAndPrivateKey = provider.ToXmlString(true);
             }
         }
+        #endregion       
 
-        public static string EncryptText(string text, int keySize, string publicKeyXml)
-        {
-            var encrypted = Encrypt(Encoding.UTF8.GetBytes(text), keySize, publicKeyXml);
-            return Convert.ToBase64String(encrypted);
-        }
-
+        #region PGP Method
         public static byte[] PGPEncrypt(string message, int keySize, string publicKeyXml)
         {
             //TODO
@@ -56,9 +53,9 @@ namespace SendFiles
 
             byte[] dec = AsymmetricEncryption.Decrypt(key, 1024, publicAndPrivateKey);
 
-            Array.Copy(msg, key, 8);
 
-            Array.Copy(msg, 8, ms, 0, ms.Length);
+
+            Array.Copy(msg, 128, ms, 0, ms.Length);
 
             SymmetricEncryption symmetric = new SymmetricEncryption();
             symmetric.key = key;
@@ -68,7 +65,9 @@ namespace SendFiles
             return res;
         }
 
+        #endregion
 
+        #region RSA Method
         public static byte[] Encrypt(byte[] data, int keySize, string publicKeyXml)
         {
             if (data == null || data.Length == 0) throw new ArgumentException("Data are empty", "data");
@@ -86,11 +85,7 @@ namespace SendFiles
             }
         }
 
-        public static string DecryptText(string text, int keySize, string publicAndPrivateKeyXml)
-        {
-            var decrypted = Decrypt(Convert.FromBase64String(text), keySize, publicAndPrivateKeyXml);
-            return Encoding.UTF8.GetString(decrypted);
-        }
+       
 
         public static byte[] Decrypt(byte[] data, int keySize, string publicAndPrivateKeyXml)
         {
@@ -112,6 +107,19 @@ namespace SendFiles
                 return ((keySize - 384) / 8) + 7;
             }
             return ((keySize - 384) / 8) + 37;
+        }
+        #endregion
+
+        public static string EncryptText(string text, int keySize, string publicKeyXml)
+        {
+            var encrypted = Encrypt(Encoding.UTF8.GetBytes(text), keySize, publicKeyXml);
+            return Convert.ToBase64String(encrypted);
+        }
+
+        public static string DecryptText(string text, int keySize, string publicAndPrivateKeyXml)
+        {
+            var decrypted = Decrypt(Convert.FromBase64String(text), keySize, publicAndPrivateKeyXml);
+            return Encoding.UTF8.GetString(decrypted);
         }
 
         public static bool IsKeySizeValid(int keySize)

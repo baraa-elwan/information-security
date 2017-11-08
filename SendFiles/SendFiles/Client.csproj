@@ -118,9 +118,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ReceiveFiles\ReceiveFiles\ReceiveFiles.csproj">
+    <ProjectReference Include="..\..\ReceiveFiles\ReceiveFiles\Server.csproj">
       <Project>{49fadf7b-b738-495a-a37e-df957d7e7c07}</Project>
-      <Name>ReceiveFiles</Name>
+      <Name>Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

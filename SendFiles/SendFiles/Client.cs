@@ -6,26 +6,33 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Security.Cryptography;
-using ReceiveFiles;
+using Server;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.Net;
 using System.Diagnostics;
 
-namespace SendFiles
+namespace Client
 {
     class Client
     {
         public TcpClient socket { get; set; }
-        
+
         public string SIP;
+
         Process currentProcess = Process.GetCurrentProcess();
+
         public int SPort;
+
+        public BinaryWriter writer;
+
         public Client()
         {
             socket = new TcpClient();
-            
+
         }
+       
+        #region connect to server 
         public void connect(string host, int port)
         {
             //connect to server
@@ -36,65 +43,54 @@ namespace SendFiles
             SIP = host;
             SPort = port;
 
+            writer = new BinaryWriter(socket.GetStream());
         }
+        #endregion
 
         public void disconnect()
         {
             socket.Close();
         }
 
+        #region register client on the network
         public void sendUserData(string UName, string PublicK)
         {
-            
+
             try
             {
-               NetworkStream netstream = socket.GetStream();
-                BinaryWriter writer = new BinaryWriter(netstream);
-                
-                    writer.Write(1);
-                    writer.Write(PublicK);
-                    writer.Write(UName);
-                    writer.Flush();
-                
-              
+               
+                writer.Write(1);
+                writer.Write(PublicK);
+                writer.Write(UName);
+                writer.Flush();
+
             }
             catch
             {
 
             }
         }
-        public List<SomeData> ReceiveClientList()
-        {
-            sendReq();
-            List<SomeData> data = new List<SomeData>();
-            //netstream = socket.GetStream();
-            BinaryReader reader = new BinaryReader(socket.GetStream());
-            
-            int len = reader.ReadInt32();
-            for (int i = 0; i < len; i++)
-            {
-                SomeData itm = new SomeData();
-                itm.Text = reader.ReadString();
-                itm.Value = reader.ReadString();
-                data.Add(itm);
-            }
-            
+        #endregion
 
-            return data;
-            
 
-        }
+        #region send "get client" request
         public void sendReq()
         {
-           NetworkStream netstream = socket.GetStream();
-
-            BinaryWriter writer = new BinaryWriter(netstream);
-           
+        
             writer.Write(2);
-              
-            //writer.Close();
+
+            writer.Flush();
         }
-       
+        #endregion
+
+        public void saveFile(String data, string path)
+        {
+            StreamWriter stream = new StreamWriter(path);
+
+            stream.Write(data);
+
+            stream.Close();
+        }
 
     }
 }

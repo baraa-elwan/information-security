@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Threading;
 
-namespace ReceiveFiles
+namespace Server
 {
     static class Program
     {

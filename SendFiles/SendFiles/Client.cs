@@ -92,7 +92,7 @@ namespace SendFiles
            
             writer.Write(2);
               
-            writer.Close();
+            //writer.Close();
         }
        
 

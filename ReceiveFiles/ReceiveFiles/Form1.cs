@@ -126,9 +126,13 @@ namespace ReceiveFiles
             {
                 try
                 {
+                   
                     option = reader.ReadInt32();
+
                     if (option == 2)
                     {
+                        byte[] b = getBytes("lst");
+                        mClient.Client.Send(b);
                         SendToClient(mClient);
                     }
 
@@ -136,30 +140,30 @@ namespace ReceiveFiles
                     {
                         int recev = reader.ReadInt32();
 
-                        String msg = reader.ReadString();
+                        int dataLen = reader.ReadInt32();
+                       
+                        byte[] msg = reader.ReadBytes(dataLen);
 
                         TcpClient reciever = clients[recev];
                         SocketAsyncEventArgs e = new SocketAsyncEventArgs();
 
                         //TODO sende request and wait for answer
                         //  
-                        reciever.Client.Send(getBytes("send"));
+                       // reciever.Client.Send(getBytes("send"));
 
                         NetworkStream rec = reciever.GetStream();
+                        rec.Write(getBytes("msg"), 0, 3);
                         BinaryReader recRead = new BinaryReader(rec);
 
-                        int i = recRead.ReadInt32();
-                        recRead.Close();
-                        if(i==1)
-                        {
-                            BinaryWriter recW= new BinaryWriter(rec);
-                            byte[] m = getBytes(msg);
-                            recW.Write(m.Length);
-                            recW.Write(m);
+                       
+                        BinaryWriter recW= new BinaryWriter(rec);
+                        recW.Write(msg.Length);
+                        recW.Write(msg);
 
 
-                            recW.Close();
-                        }
+
+                        recW.Flush();
+                        
                     }
                 }
                 catch

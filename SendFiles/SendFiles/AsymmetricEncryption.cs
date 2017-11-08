@@ -33,26 +33,26 @@ namespace SendFiles
             SymmetricEncryption encryption = new SymmetricEncryption();
             byte[] encrypted = encryption.encrypt_data(data);
             byte[] key;
-            using (var provider = new RSACryptoServiceProvider(keySize))
-            {
-                provider.FromXmlString(publicKeyXml);
-                key = provider.Encrypt(encryption.key, _optimalAsymmetricEncryptionPadding);
 
-                byte[] msg = new byte[key.Length + encrypted.Length];
-                key.CopyTo(msg, 0);
-                encrypted.CopyTo(msg, key.Length);
-                return msg;
-            }
+            key = Encrypt(encryption.key, 1024, publicKeyXml);
+
+            byte[] msg = new byte[key.Length + encrypted.Length];
+
+            Array.Copy(key, msg, key.Length);
+
+            encrypted.CopyTo(msg, key.Length);
+
+            return msg;
            
         }
 
         public static String PGPDecrypt(byte[] msg, string publicAndPrivateKey)
         {
             //TODO
-
-            byte[] key = new byte[8];
-            byte[] ms = new byte[msg.Length - 8];
-            Array.Copy(msg, key, 8);
+           
+            byte[] key = new byte[128];
+            byte[] ms = new byte[msg.Length - 128];
+            Array.Copy(msg, key, 128);
 
             byte[] dec = AsymmetricEncryption.Decrypt(key, 1024, publicAndPrivateKey);
 

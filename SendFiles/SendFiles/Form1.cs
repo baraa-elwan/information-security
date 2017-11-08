@@ -24,7 +24,7 @@ namespace SendFiles
 
         string username = String.Empty;
 
-        string publicKey=String.Empty;
+        string publicKey = String.Empty;
 
         string publicAndPrivateKey = String.Empty;
 
@@ -38,14 +38,14 @@ namespace SendFiles
         private void Form1_Load(object sender, EventArgs e)
         {
             client = new Client();
-            progressBar1.Visible=true;
-            progressBar1.Minimum=1;
-            progressBar1.Value=1;
-            progressBar1.Step=1;
-            
+            progressBar1.Visible = true;
+            progressBar1.Minimum = 1;
+            progressBar1.Value = 1;
+            progressBar1.Step = 1;
+            list_Clients.ValueMember = "Value";
+            list_Clients.DisplayMember = "Text";
+            list_Clients.DataSource = clientList;
         }
-
-        
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
@@ -57,9 +57,9 @@ namespace SendFiles
             if (Dlg.ShowDialog() == DialogResult.OK)
             {
                 SendingFilePath = Dlg.FileName;
-                
+
             }
-            
+
         }
 
         private void btnSend_Click(object sender, EventArgs e)
@@ -75,12 +75,12 @@ namespace SendFiles
                 SendTCP(SendingFilePath, txtIP.Text, Int32.Parse(txtPort.Text));
             }
             else
-                MessageBox.Show("Select a file","Warning");
+                MessageBox.Show("Select a file", "Warning");
         }
 
         public void SendTCP(string M, string IPA, Int32 PortN)
         {
-            
+
             TcpClient mclient = this.client.socket;
             lblStatus.Text = "";
             NetworkStream netstream = mclient.GetStream();
@@ -93,13 +93,14 @@ namespace SendFiles
                 String data = File.ReadAllText(SendingFilePath, Encoding.GetEncoding(20127));
 
                 int keySize = Int32.Parse(numericUpDown1.Value.ToString());
-                String encrypted =  getString(AsymmetricEncryption.PGPEncrypt(data, keySize, key));
+                byte[] encrypted = AsymmetricEncryption.PGPEncrypt(data, keySize, key);
 
-               // MessageBox.Show(encrypted);
+                // MessageBox.Show(encrypted);
 
                 BinaryWriter writer = new BinaryWriter(netstream);
                 writer.Write(3);
                 writer.Write(reciever);
+                writer.Write(encrypted.Length);
                 writer.Write(encrypted);
                 writer.Flush();
 
@@ -141,7 +142,7 @@ namespace SendFiles
             AsymmetricEncryption.GenerateKeys(keySize, out publicKey, out publicAndPrivateKey);
             btn_generatePKey.Enabled = false;
             groupBox1.Enabled = true;
-          
+
         }
 
         private void btn_connect_Click(object sender, EventArgs e)
@@ -152,48 +153,52 @@ namespace SendFiles
             }
             else
                 if (txtIP.Text == String.Empty || txtPort.Text == String.Empty)
+            {
+                MessageBox.Show("enter Ip or port please !");
+            }
+            else
+            {
+                try
                 {
-                    MessageBox.Show("enter Ip or port please !");
-                }
-                else
-                {
-                    try
-                    {
-                        username = tBox_Username.Text;
-                        //start connection with button
-                        
-                        client.connect(txtIP.Text, Convert.ToInt32(txtPort.Text));
-                        client.sendUserData(username, publicKey);
+                    username = tBox_Username.Text;
+                    //start connection with button
 
-                         new Thread(receiveListening).Start();
-                        connection_stus.Text = "Connected";
-                        btn_connect.Enabled = false;
-                        connected = true;
-                        groupBox2.Enabled = true;
-                        
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("error " + ex);
-                    }
+                    client.connect(txtIP.Text, Convert.ToInt32(txtPort.Text));
+                    client.sendUserData(username, publicKey);
+                    new Thread(clientReceiver).Start();
+                    connection_stus.Text = "Connected";
+                    btn_connect.Enabled = false;
+                    connected = true;
+                    groupBox2.Enabled = true;
+
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("error " + ex);
+                }
+            }
         }
 
-        void receiveListening()
+        void clientReceiver()
         {
-            byte[] buffer = new byte[BufferSize] ;
 
+            String regStr;
+            TcpClient socket = this.client.socket;
+
+
+            //  
+            int le = getBytes("msg").Length;
+            byte[] req = new byte[le];
             while (true)
             {
-                //TODO recieve reques 
 
-                // TODO show dialog
-
-                // recieve decrypt and save file
-                byte[] req =new byte[4];
-                client.socket.Client.Receive(req);
-
-                if (getString(req).Equals("send"))
+                NetworkStream netStream = socket.GetStream();
+                //while (netStream.Read(req, 0, req.Length) > 0)
+                //{
+                socket.Client.Receive(req);
+                regStr = getString(req);
+                BinaryReader streamR = new BinaryReader(netStream);
+                if (regStr.Equals("msg"))
                 {
                     string message = "Accept the Incoming File ";
                     string caption = "Incoming Connection";
@@ -204,30 +209,51 @@ namespace SendFiles
                     if (result == System.Windows.Forms.DialogResult.Yes)
                     {
                         string SaveFileName = string.Empty;
-                        StreamWriter stream = new StreamWriter(client.socket.GetStream());
-                        stream.Write(1);
-                      
-                        byte[] RecData;//= new byte[BufferSize];
-                        NetworkStream netstream = client.socket.GetStream();
-                        BinaryReader streamR = new BinaryReader(netstream);
-                        int len = streamR.ReadInt32();
-                        RecData =  streamR.ReadBytes(len);
 
-                        SaveFileName = "C:/test.txt";
+                        byte[] RecData;
+                        int dataLen = streamR.ReadInt32();
 
-                       String res =  AsymmetricEncryption.PGPDecrypt(RecData, publicAndPrivateKey);
+
+                        
+                        RecData = streamR.ReadBytes(dataLen);
+
+                        SaveFileName = "D://test.txt";
+
+                        String res = AsymmetricEncryption.PGPDecrypt(RecData, publicAndPrivateKey);
 
                         FileStream Fs = new FileStream(SaveFileName, FileMode.OpenOrCreate, FileAccess.Write);
 
                         byte[] resBytes = getBytes(res);
                         Fs.Write(resBytes, 0, resBytes.Length);
                         Fs.Close();
-                       
 
                     }
+
                 }
-            
+                else
+                {
+
+                    //netstream = socket.GetStream();
+
+                    clientList.Clear();
+                    int len = streamR.ReadInt32();
+                    for (int i = 0; i < len; i++)
+                    {
+                        SomeData itm = new SomeData();
+                        itm.Text = streamR.ReadString();
+                        itm.Value = streamR.ReadString();
+                        clientList.Add(itm);
+                    }
+                    //streamR.Close();
+                    //ShowData();
+                    this.Invoke((MethodInvoker)(() => ShowData()));
+                }
+
+                // }
+
+
             }
+
         }
 
         public void ShowData()
@@ -236,16 +262,17 @@ namespace SendFiles
             list_Clients.ValueMember = "Value";
             list_Clients.DisplayMember = "Text";
             list_Clients.DataSource = clientList;
+
         }
         private void btn_refreash_Click(object sender, EventArgs e)
         {
-            clientList= client.ReceiveClientList();
-            ShowData();
+            client.sendReq();
+
         }
 
         private void list_Clients_SelectedIndexChanged(object sender, EventArgs e)
         {
-              reciever =  list_Clients.SelectedIndex;
+            reciever = list_Clients.SelectedIndex;
 
         }
 
@@ -258,5 +285,7 @@ namespace SendFiles
         {
             return Encoding.UTF8.GetString(bytes, 0, bytes.Length);
         }
+
+        
     }
 }

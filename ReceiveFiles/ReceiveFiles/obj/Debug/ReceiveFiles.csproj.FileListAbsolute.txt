@@ -22,3 +22,12 @@ C:\Users\baraa\Desktop\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles
 C:\Users\baraa\Desktop\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.csproj.CoreCompileInputs.cache
 C:\Users\baraa\Desktop\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.exe
 C:\Users\baraa\Desktop\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.pdb
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.csprojResolveAssemblyReference.cache
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.Form1.resources
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.Properties.Resources.resources
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.csproj.GenerateResource.Cache
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.csproj.CoreCompileInputs.cache
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.exe
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.pdb
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\bin\Debug\ReceiveFiles.exe
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\bin\Debug\ReceiveFiles.pdb

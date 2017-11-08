@@ -68,7 +68,7 @@ namespace SendFiles
             // btnBrowse
             // 
             this.btnBrowse.Location = new System.Drawing.Point(167, 223);
-            this.btnBrowse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBrowse.Margin = new System.Windows.Forms.Padding(4);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(100, 30);
             this.btnBrowse.TabIndex = 1;
@@ -89,7 +89,7 @@ namespace SendFiles
             // txtIP
             // 
             this.txtIP.Location = new System.Drawing.Point(92, 33);
-            this.txtIP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtIP.Margin = new System.Windows.Forms.Padding(4);
             this.txtIP.Name = "txtIP";
             this.txtIP.Size = new System.Drawing.Size(173, 22);
             this.txtIP.TabIndex = 3;
@@ -108,7 +108,7 @@ namespace SendFiles
             // txtPort
             // 
             this.txtPort.Location = new System.Drawing.Point(92, 85);
-            this.txtPort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPort.Margin = new System.Windows.Forms.Padding(4);
             this.txtPort.Name = "txtPort";
             this.txtPort.Size = new System.Drawing.Size(173, 22);
             this.txtPort.TabIndex = 5;
@@ -117,7 +117,7 @@ namespace SendFiles
             // btnSend
             // 
             this.btnSend.Location = new System.Drawing.Point(19, 277);
-            this.btnSend.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSend.Margin = new System.Windows.Forms.Padding(4);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(100, 25);
             this.btnSend.TabIndex = 6;
@@ -138,7 +138,7 @@ namespace SendFiles
             // progressBar1
             // 
             this.progressBar1.Location = new System.Drawing.Point(143, 277);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(4);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(401, 25);
             this.progressBar1.TabIndex = 8;
@@ -146,7 +146,7 @@ namespace SendFiles
             // btn_generatePKey
             // 
             this.btn_generatePKey.Location = new System.Drawing.Point(360, 15);
-            this.btn_generatePKey.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_generatePKey.Margin = new System.Windows.Forms.Padding(4);
             this.btn_generatePKey.Name = "btn_generatePKey";
             this.btn_generatePKey.Size = new System.Drawing.Size(200, 28);
             this.btn_generatePKey.TabIndex = 9;
@@ -167,7 +167,7 @@ namespace SendFiles
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(123, 18);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -194,9 +194,9 @@ namespace SendFiles
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Enabled = false;
             this.groupBox1.Location = new System.Drawing.Point(16, 69);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(579, 155);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
@@ -214,7 +214,7 @@ namespace SendFiles
             // tBox_Username
             // 
             this.tBox_Username.Location = new System.Drawing.Point(357, 36);
-            this.tBox_Username.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tBox_Username.Margin = new System.Windows.Forms.Padding(4);
             this.tBox_Username.Name = "tBox_Username";
             this.tBox_Username.Size = new System.Drawing.Size(173, 22);
             this.tBox_Username.TabIndex = 8;
@@ -233,7 +233,7 @@ namespace SendFiles
             // btn_connect
             // 
             this.btn_connect.Location = new System.Drawing.Point(393, 81);
-            this.btn_connect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_connect.Margin = new System.Windows.Forms.Padding(4);
             this.btn_connect.Name = "btn_connect";
             this.btn_connect.Size = new System.Drawing.Size(100, 28);
             this.btn_connect.TabIndex = 6;
@@ -253,9 +253,9 @@ namespace SendFiles
             this.groupBox2.Controls.Add(this.lblStatus);
             this.groupBox2.Enabled = false;
             this.groupBox2.Location = new System.Drawing.Point(16, 231);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(579, 318);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
@@ -264,7 +264,7 @@ namespace SendFiles
             // btn_refreash
             // 
             this.btn_refreash.Location = new System.Drawing.Point(296, 171);
-            this.btn_refreash.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_refreash.Margin = new System.Windows.Forms.Padding(4);
             this.btn_refreash.Name = "btn_refreash";
             this.btn_refreash.Size = new System.Drawing.Size(100, 28);
             this.btn_refreash.TabIndex = 9;
@@ -287,7 +287,7 @@ namespace SendFiles
             this.list_Clients.FormattingEnabled = true;
             this.list_Clients.ItemHeight = 16;
             this.list_Clients.Location = new System.Drawing.Point(19, 50);
-            this.list_Clients.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.list_Clients.Margin = new System.Windows.Forms.Padding(4);
             this.list_Clients.Name = "list_Clients";
             this.list_Clients.Size = new System.Drawing.Size(247, 148);
             this.list_Clients.TabIndex = 0;
@@ -303,7 +303,7 @@ namespace SendFiles
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btn_generatePKey);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Send Files";
             this.Load += new System.EventHandler(this.Form1_Load);

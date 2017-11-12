@@ -12,8 +12,13 @@ namespace Client
 
         public byte[] key
         {
-            set { }
+            set { aes.Key = value; }
             get { return aes.Key; }
+        }
+
+       public void setKey(byte [] key)
+        {
+           this.key =(byte[]) key.Clone();
         }
 
         public SymmetricEncryption()
@@ -39,8 +44,8 @@ namespace Client
             StreamWriter st = new StreamWriter(cryptoStream);
 
 
-
             cryptoStream.Write(data, 0, data.Length);
+
             cryptoStream.FlushFinalBlock();
 
             encrypted = mem_stream.ToArray();
@@ -54,8 +59,6 @@ namespace Client
             string plaintext = null;
 
             //class for aes algorithm
-
-
 
             aes.Padding = PaddingMode.Zeros;
             //

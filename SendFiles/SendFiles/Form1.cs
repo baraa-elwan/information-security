@@ -49,6 +49,8 @@ namespace Client
         public void SendFile(string M, string IPA, Int32 PortN)
         {
 
+            
+
             TcpClient mclient = this.client.socket;
             lblStatus.Text = "";
             NetworkStream netstream = mclient.GetStream();
@@ -61,8 +63,9 @@ namespace Client
                 String data = File.ReadAllText(SendingFilePath, Encoding.GetEncoding(20127));
 
                 int keySize = Int32.Parse(numericUpDown1.Value.ToString());
-                byte[] encrypted = AsymmetricEncryption.PGPEncrypt(data, keySize, key);
+                byte[] encrypted = AsymmetricEncryption.PGPEncrypt(data, 1024, key);
 
+                MessageBox.Show(AsymmetricEncryption.PGPDecrypt(encrypted, publicAndPrivateKey));
                
                 BinaryWriter writer = new BinaryWriter(netstream);
                 writer.Write(3);

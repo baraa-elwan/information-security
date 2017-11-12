@@ -25,10 +25,13 @@ namespace Client
         #region PGP Method
         public static byte[] PGPEncrypt(string message, int keySize, string publicKeyXml)
         {
+
             //TODO
-            byte[] data = System.Text.Encoding.UTF8.GetBytes(message);
+            byte[] data = Encoding.UTF8.GetBytes(message);
             SymmetricEncryption encryption = new SymmetricEncryption();
+
             byte[] encrypted = encryption.encrypt_data(data);
+          
             byte[] key;
 
             key = Encrypt(encryption.key, 1024, publicKeyXml);
@@ -40,13 +43,13 @@ namespace Client
             encrypted.CopyTo(msg, key.Length);
 
             return msg;
-           
+
         }
 
         public static String PGPDecrypt(byte[] msg, string publicAndPrivateKey)
         {
             //TODO
-           
+
             byte[] key = new byte[128];
             byte[] ms = new byte[msg.Length - 128];
             Array.Copy(msg, key, 128);
@@ -58,7 +61,7 @@ namespace Client
             Array.Copy(msg, 128, ms, 0, ms.Length);
 
             SymmetricEncryption symmetric = new SymmetricEncryption();
-            symmetric.key = key;
+            symmetric.key = dec;
 
             String res = symmetric.decrypt_data(ms);
 
@@ -85,7 +88,7 @@ namespace Client
             }
         }
 
-       
+
 
         public static byte[] Decrypt(byte[] data, int keySize, string publicAndPrivateKeyXml)
         {

@@ -58,14 +58,14 @@ namespace Client
             {
                 String key = clientList[reciever].Value;
                 lblStatus.Text = "Connected to the Server...\n";
-                netstream = mclient.GetStream();
+               // netstream = mclient.GetStream();
 
                 String data = File.ReadAllText(SendingFilePath, Encoding.GetEncoding(20127));
 
                 int keySize = Int32.Parse(numericUpDown1.Value.ToString());
-                byte[] encrypted = AsymmetricEncryption.PGPEncrypt(data, 1024, key);
+                byte[] encrypted = AsymmetricEncryption.PGPEncrypt(data, keySize, key);
 
-                MessageBox.Show(AsymmetricEncryption.PGPDecrypt(encrypted, publicAndPrivateKey));
+               // MessageBox.Show(AsymmetricEncryption.PGPDecrypt(encrypted, publicAndPrivateKey));
                
                 BinaryWriter writer = new BinaryWriter(netstream);
                 writer.Write(3);
@@ -255,5 +255,9 @@ namespace Client
         }
         #endregion
 
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

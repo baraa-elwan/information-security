@@ -6,6 +6,8 @@ using System.IO;
 using System.Net.Sockets;
 using Server;
 using System.Threading;
+using SendFiles;
+using System.Security.Cryptography;
 
 namespace Client
 {
@@ -38,8 +40,8 @@ namespace Client
         {
             client = new Client();
             progressBar1.Visible = true;
-            progressBar1.Minimum = 1;
             progressBar1.Value = 1;
+            progressBar1.Minimum = 1;
             progressBar1.Step = 1;
             list_Clients.ValueMember = "Value";
             list_Clients.DisplayMember = "Text";
@@ -48,9 +50,6 @@ namespace Client
 
         public void SendFile(string M, string IPA, Int32 PortN)
         {
-
-            
-
             TcpClient mclient = this.client.socket;
             lblStatus.Text = "";
             NetworkStream netstream = mclient.GetStream();
@@ -59,21 +58,32 @@ namespace Client
                 String key = clientList[reciever].Value;
                 lblStatus.Text = "Connected to the Server...\n";
                 netstream = mclient.GetStream();
-
+                
+                //the message
                 String data = File.ReadAllText(SendingFilePath, Encoding.GetEncoding(20127));
-
                 int keySize = Int32.Parse(numericUpDown1.Value.ToString());
-                byte[] encrypted = AsymmetricEncryption.PGPEncrypt(data, 1024, key);
 
-                MessageBox.Show(AsymmetricEncryption.PGPDecrypt(encrypted, publicAndPrivateKey));
+                //hashing the message
+                //string hashMsg =Hashing.HashTheMessage(data);
+                //string hashMsg = Hashing.MD5Hash(data);
+
+                //byte[] encryptedHash= AsymmetricEncryption.Encrypt(getBytes(hashMsg), keySize, publicAndPrivateKey);
+                byte[] encryptedHash = AsymmetricEncryption.GetSignature(getBytes(data));
+
+                byte[] encrypted = AsymmetricEncryption.PGPEncrypt(data, keySize, key);
+
+                //MessageBox.Show(AsymmetricEncryption.PGPDecrypt(encrypted, publicAndPrivateKey));
                
                 BinaryWriter writer = new BinaryWriter(netstream);
                 writer.Write(3);
                 writer.Write(reciever);
                 writer.Write(encrypted.Length);
                 writer.Write(encrypted);
+                writer.Write(encryptedHash.Length);
+                writer.Write(encryptedHash);
+                //writer.Write(hashMsg);
                 writer.Flush();
-
+                
                 
             }
             catch (Exception ex)
@@ -168,7 +178,7 @@ namespace Client
                 MessageBox.Show("Select a file", "Warning");
         }
 
-       
+
         #region recievin thread process
         void clientReceiver()
         {
@@ -178,10 +188,9 @@ namespace Client
             byte[] req = new byte[reqLen];
             while (socket.Connected)
             {
-
                 NetworkStream netStream = socket.GetStream();
                 socket.Client.Receive(req);
-                
+
                 BinaryReader streamR = new BinaryReader(netStream);
                 if (getString(req).Equals("msg"))
                 {
@@ -200,17 +209,88 @@ namespace Client
                         string SaveFileName = string.Empty;
 
                         byte[] RecData;
+                        byte[] RecHash;
 
                         int dataLen = streamR.ReadInt32();
 
                         RecData = streamR.ReadBytes(dataLen);
 
+                        int HashLen = streamR.ReadInt32();
+
+                        RecHash = streamR.ReadBytes(32);
+
+                        //string hashMsg = getString(RecHash);
                         SaveFileName = "D://test.txt";
 
                         String res = AsymmetricEncryption.PGPDecrypt(RecData, publicAndPrivateKey);
+                        res = res.Replace("\0", "");
+                        RSACryptoServiceProvider RSAalg = new RSACryptoServiceProvider();
+
+                        RSAParameters Key = RSAalg.ExportParameters(true);
+
+                        // Verify the data and display the result to the 
+                        // console.
+                        try
+                        {
+                            if (AsymmetricEncryption.VerifySignedHash(getBytes(res), RecHash, Key))
+                            {
+                                Console.WriteLine("The data was verified.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("The data does not match the signature.");
+                            }
+
+                        }
+                        catch (ArgumentNullException)
+                        {
+                            Console.WriteLine("The data was not signed or verified");
+
+                        }
+
+
+
+                        //foreach (SomeData client in clientList)
+                        //    {
+                        //        try
+                        //        {
+                        //            //byte[] CurrentHash = AsymmetricEncryption.Decrypt(RecHash, 1024, client.Value);
+                        //            //String CurrentHash = AsymmetricEncryption.PGPDecrypt(RecHash, client.Value);
+                        //            //if (AsymmetricEncryption.VerifySignedHash( res, RecHash,( client.Value))
+                        //            //{
+                        //            //    Console.WriteLine("The data was verified.");
+                        //            //}
+                        //            //else
+                        //            //{
+                        //            //    Console.WriteLine("The data does not match the signature.");
+                        //            //}
+
+                        //        }
+                        //        catch (ArgumentNullException)
+                        //        {
+                        //            Console.WriteLine("The data was not signed or verified");
+
+                        //        }
+                        //        MessageBox.Show("the Reciver is " + client.Text);
+                        //        MD5 md5Hash = MD5.Create();
+
+                        //        if (Hashing.VerifyMd5Hash(md5Hash, res, hashMsg))
+                        //        {
+                        //            MessageBox.Show("the content of massege is correct");
+                        //        }
+                        //        else
+                        //            MessageBox.Show("the content of massege isn't correct");
+
+                        //    }
+                        //        catch (Exception ex)
+                        //    {
+                        //        continue;
+                        //    }
+                        //}
+                        //String CurrentHash = AsymmetricEncryption.PGPDecrypt(RecHash, publicAndPrivateKey);
+
 
                         client.saveFile(res, SaveFileName);
-
                     }
 
                 }
@@ -225,12 +305,12 @@ namespace Client
                         itm.Value = streamR.ReadString();
                         clientList.Add(itm);
                     }
-                    
+
                     this.Invoke((MethodInvoker)(() => ShowData()));
                 }
             }
-
         }
+        
         #endregion
 
         #region helpers

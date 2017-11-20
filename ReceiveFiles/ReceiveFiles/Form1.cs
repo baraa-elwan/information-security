@@ -128,6 +128,10 @@ namespace Server
                        
                         byte[] msg = reader.ReadBytes(dataLen);
 
+                        int hashLen = reader.ReadInt32();
+
+                        byte[] msgHash = reader.ReadBytes(dataLen);
+
                         TcpClient reciever = clients[recev];
 
                         NetworkStream rec = reciever.GetStream();
@@ -139,7 +143,8 @@ namespace Server
                         recW.Write(msg.Length);
                         recW.Write(msg);
 
-
+                        recW.Write(msgHash.Length);
+                        recW.Write(msgHash);
 
                         recW.Flush();
                         

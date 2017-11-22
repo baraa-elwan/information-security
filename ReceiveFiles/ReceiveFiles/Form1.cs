@@ -122,7 +122,8 @@ namespace Server
 
                    else  if (option == 3)
                     {
-                        int recev = reader.ReadInt32();
+                    
+                       int recev = reader.ReadInt32();
 
                         int dataLen = reader.ReadInt32();
                        

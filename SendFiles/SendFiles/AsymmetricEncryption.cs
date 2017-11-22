@@ -11,60 +11,7 @@ namespace Client
     {
         private static bool _optimalAsymmetricEncryptionPadding = false;
 
-        public static byte[] GetSignature(byte[] originalData)
-        {
-            RSACryptoServiceProvider RSAalg = new RSACryptoServiceProvider();
-
-            RSAParameters Key = RSAalg.ExportParameters(true);
-
-            // Hash and sign the data.
-            return HashAndSignBytes(originalData, Key);
-        }
-
-        public static byte[] HashAndSignBytes(byte[] DataToSign, RSAParameters Key)
-        {
-            try
-            {
-                // Create a new instance of RSACryptoServiceProvider using the 
-                // key from RSAParameters.  
-                RSACryptoServiceProvider RSAalg = new RSACryptoServiceProvider();
-
-                RSAalg.ImportParameters(Key);
-
-                // Hash and sign the data. Pass a new instance of SHA1CryptoServiceProvider
-                // to specify the use of SHA1 for hashing.
-                return RSAalg.SignData(DataToSign, new SHA1CryptoServiceProvider());
-            }
-            catch (CryptographicException e)
-            {
-                Console.WriteLine(e.Message);
-
-                return null;
-            }
-        }
-
-        public static bool VerifySignedHash(byte[] DataToVerify, byte[] SignedData, RSAParameters Key)
-        {
-            try
-            {
-                // Create a new instance of RSACryptoServiceProvider using the 
-                // key from RSAParameters.
-                RSACryptoServiceProvider RSAalg = new RSACryptoServiceProvider();
-
-                RSAalg.ImportParameters(Key);
-
-                // Verify the data using the signature.  Pass a new instance of SHA1CryptoServiceProvider
-                // to specify the use of SHA1 for hashing.
-                return RSAalg.VerifyData(DataToVerify, new SHA1CryptoServiceProvider(), SignedData);
-
-            }
-            catch (CryptographicException e)
-            {
-                Console.WriteLine(e.Message);
-
-                return false;
-            }
-        }
+        
 
         #region generate public and private keys
         public static void GenerateKeys(int keySize, out string publicKey, out string publicAndPrivateKey)

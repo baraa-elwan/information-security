@@ -64,11 +64,7 @@ namespace Client
                 int keySize = Int32.Parse(numericUpDown1.Value.ToString());
 
                 //hashing the message
-                //string hashMsg =Hashing.HashTheMessage(data);
-                //string hashMsg = Hashing.MD5Hash(data);
-
-                //byte[] encryptedHash= AsymmetricEncryption.Encrypt(getBytes(hashMsg), keySize, publicAndPrivateKey);
-                byte[] encryptedHash = AsymmetricEncryption.GetSignature(getBytes(data));
+               
 
                 byte[] encrypted = AsymmetricEncryption.PGPEncrypt(data, keySize, key);
 
@@ -79,9 +75,7 @@ namespace Client
                 writer.Write(reciever);
                 writer.Write(encrypted.Length);
                 writer.Write(encrypted);
-                writer.Write(encryptedHash.Length);
-                writer.Write(encryptedHash);
-                //writer.Write(hashMsg);
+                
                 writer.Flush();
                 
                 
@@ -135,7 +129,7 @@ namespace Client
         private void btn_generatePKey_Click(object sender, EventArgs e)
         {
             int keySize = Convert.ToInt32(numericUpDown1.Value);
-            AsymmetricEncryption.GenerateKeys(keySize, out publicKey, out publicAndPrivateKey);
+            AsymmetricEncryption.GenerateKeys(keySize,out publicKey, out publicAndPrivateKey);
             btn_generatePKey.Enabled = false;
             groupBox1.Enabled = true;
 
@@ -215,80 +209,12 @@ namespace Client
 
                         RecData = streamR.ReadBytes(dataLen);
 
-                        int HashLen = streamR.ReadInt32();
-
-                        RecHash = streamR.ReadBytes(32);
-
-                        //string hashMsg = getString(RecHash);
+                        
                         SaveFileName = "D://test.txt";
 
-                        String res = AsymmetricEncryption.PGPDecrypt(RecData, publicAndPrivateKey);
+                        String res = AsymmetricEncryption.PGPDecrypt(RecData, publicKey);
                         res = res.Replace("\0", "");
-                        RSACryptoServiceProvider RSAalg = new RSACryptoServiceProvider();
-
-                        RSAParameters Key = RSAalg.ExportParameters(true);
-
-                        // Verify the data and display the result to the 
-                        // console.
-                        try
-                        {
-                            if (AsymmetricEncryption.VerifySignedHash(getBytes(res), RecHash, Key))
-                            {
-                                Console.WriteLine("The data was verified.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("The data does not match the signature.");
-                            }
-
-                        }
-                        catch (ArgumentNullException)
-                        {
-                            Console.WriteLine("The data was not signed or verified");
-
-                        }
-
-
-
-                        //foreach (SomeData client in clientList)
-                        //    {
-                        //        try
-                        //        {
-                        //            //byte[] CurrentHash = AsymmetricEncryption.Decrypt(RecHash, 1024, client.Value);
-                        //            //String CurrentHash = AsymmetricEncryption.PGPDecrypt(RecHash, client.Value);
-                        //            //if (AsymmetricEncryption.VerifySignedHash( res, RecHash,( client.Value))
-                        //            //{
-                        //            //    Console.WriteLine("The data was verified.");
-                        //            //}
-                        //            //else
-                        //            //{
-                        //            //    Console.WriteLine("The data does not match the signature.");
-                        //            //}
-
-                        //        }
-                        //        catch (ArgumentNullException)
-                        //        {
-                        //            Console.WriteLine("The data was not signed or verified");
-
-                        //        }
-                        //        MessageBox.Show("the Reciver is " + client.Text);
-                        //        MD5 md5Hash = MD5.Create();
-
-                        //        if (Hashing.VerifyMd5Hash(md5Hash, res, hashMsg))
-                        //        {
-                        //            MessageBox.Show("the content of massege is correct");
-                        //        }
-                        //        else
-                        //            MessageBox.Show("the content of massege isn't correct");
-
-                        //    }
-                        //        catch (Exception ex)
-                        //    {
-                        //        continue;
-                        //    }
-                        //}
-                        //String CurrentHash = AsymmetricEncryption.PGPDecrypt(RecHash, publicAndPrivateKey);
-
+                        
 
                         client.saveFile(res, SaveFileName);
                     }

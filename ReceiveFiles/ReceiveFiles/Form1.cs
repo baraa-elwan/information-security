@@ -84,80 +84,9 @@ namespace Server
         }
 
 
-        void process_client()
-        {
-            TcpClient mClient = client;
-            clients.Add(mClient);
+        
 
-            NetworkStream stream = mClient.GetStream();
-            Status = "Connected to a client\n";
-            BinaryReader reader = new BinaryReader(stream);
-
-            int option = reader.ReadInt32();
-
-            if (option == 1)
-            {
-                SomeData itm = new SomeData();
-                itm.Value = reader.ReadString();
-                itm.Text = reader.ReadString();
-                data.Add(itm);
-
-            }
-
-
-            ShowData();
-            //listen for messages   
-            while (mClient.Connected)
-            {
-                try
-                {
-                    option = reader.ReadInt32();
-
-                    if (option == 2)
-                    {
-                        byte[] b = getBytes("lst");
-                        mClient.Client.Send(b);
-                       Server.SendToClient(mClient, data);
-                    }
-
-                   else  if (option == 3)
-                    {
-                    
-                       int recev = reader.ReadInt32();
-
-                        int dataLen = reader.ReadInt32();
-                       
-                        byte[] msg = reader.ReadBytes(dataLen);
-
-                        int hashLen = reader.ReadInt32();
-
-                        byte[] msgHash = reader.ReadBytes(dataLen);
-
-                        TcpClient reciever = clients[recev];
-
-                        NetworkStream rec = reciever.GetStream();
-
-                        reciever.Client.Send(getBytes("msg"));
-
-                       
-                        BinaryWriter recW= new BinaryWriter(rec);
-                        recW.Write(msg.Length);
-                        recW.Write(msg);
-
-                        recW.Write(msgHash.Length);
-                        recW.Write(msgHash);
-
-                        recW.Flush();
-                        
-                    }
-                }
-                catch
-                {
-                    continue;
-                }
-            }
-
-        }
+        
         public static byte[] getBytes(String str)
         {
             return Encoding.UTF8.GetBytes(str);
@@ -177,5 +106,101 @@ namespace Server
         {
             ShowData();
         }
+    
+
+
+
+ 
+       
+
+
+
+
+        void process_client()
+        {
+            TcpClient mClient = client;
+            clients.Add(mClient);
+
+            NetworkStream stream = mClient.GetStream();
+            Status = "Connected to a client\n";
+            BinaryReader reader = new BinaryReader(stream);
+
+            int option = reader.ReadInt32();
+            SomeData itm = null;
+            if (option == 1)
+            {
+                itm = new SomeData();
+                itm.Value = reader.ReadString();
+                itm.Text = reader.ReadString();
+                data.Add(itm);
+
+            }
+
+
+            ShowData();
+            //listen for messages   
+            while (mClient.Connected)
+            {
+                try
+                {
+                    option = reader.ReadInt32();
+
+                    if (option == 2)
+                    {
+                        byte[] b = getBytes("lst");
+                        mClient.Client.Send(b);
+                        Server.SendToClient(mClient, data);
+                    }
+
+                    else if (option == 3)
+                    {
+
+
+                        int recever = reader.ReadInt32();
+
+                        int dataLen = reader.ReadInt32();
+
+                        byte[] msg = reader.ReadBytes(dataLen);
+
+                        TcpClient reciever = clients[recever];
+
+                        NetworkStream rec = reciever.GetStream();
+
+                        reciever.Client.Send(getBytes("msg"));
+
+
+                        BinaryWriter recW = new BinaryWriter(rec);
+
+                        recW.Write(itm.Text);
+                        recW.Write(msg.Length);
+                        recW.Write(msg);
+                        recW.Flush();
+
+                    }
+                    else if (option == 4)
+                    {
+                        int ix = clients.IndexOf(mClient);
+                        clients.RemoveAt(ix);
+                        data.RemoveAt(ix);
+                        mClient.Close();
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+
+
+
+
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

@@ -50,6 +50,8 @@ namespace Client
             this.btn_refreash = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.list_Clients = new System.Windows.Forms.ListBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.company_text = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -182,10 +184,11 @@ namespace Client
             0,
             0,
             0});
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.company_text);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.connection_stus);
             this.groupBox1.Controls.Add(this.tBox_Username);
             this.groupBox1.Controls.Add(this.label5);
@@ -234,7 +237,7 @@ namespace Client
             // 
             // btn_connect
             // 
-            this.btn_connect.Location = new System.Drawing.Point(393, 81);
+            this.btn_connect.Location = new System.Drawing.Point(471, 119);
             this.btn_connect.Margin = new System.Windows.Forms.Padding(4);
             this.btn_connect.Name = "btn_connect";
             this.btn_connect.Size = new System.Drawing.Size(100, 28);
@@ -306,6 +309,24 @@ namespace Client
             this.list_Clients.TabIndex = 0;
             this.list_Clients.SelectedIndexChanged += new System.EventHandler(this.list_Clients_SelectedIndexChanged);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(280, 88);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(57, 17);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "comany";
+            // 
+            // company_text
+            // 
+            this.company_text.Location = new System.Drawing.Point(356, 85);
+            this.company_text.Margin = new System.Windows.Forms.Padding(4);
+            this.company_text.Name = "company_text";
+            this.company_text.Size = new System.Drawing.Size(173, 22);
+            this.company_text.TabIndex = 11;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -355,6 +376,8 @@ namespace Client
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ListBox list_Clients;
         private System.Windows.Forms.Button verify;
+        private System.Windows.Forms.TextBox company_text;
+        private System.Windows.Forms.Label label7;
 
     }
 }

@@ -27,6 +27,8 @@ namespace Server
         List<SomeData> data=new List<SomeData>();
         List<TcpClient> clients = new List<TcpClient>();
         TcpListener Listener = null;
+        String CA = String.Empty;
+
         public Form1()
         {
             InitializeComponent();
@@ -119,19 +121,28 @@ namespace Server
         void process_client()
         {
             TcpClient mClient = client;
-            clients.Add(mClient);
-
             NetworkStream stream = mClient.GetStream();
             Status = "Connected to a client\n";
             BinaryReader reader = new BinaryReader(stream);
-
             int option = reader.ReadInt32();
+
+            if (option == 99)
+            {
+                CA = reader.ReadString();
+                return;
+            }
+
+            clients.Add(mClient);
+
+           
+
             SomeData itm = null;
             if (option == 1)
             {
                 itm = new SomeData();
                 itm.Value = reader.ReadString();
-                itm.Text = reader.ReadString();
+                int len = reader.ReadInt32();
+                itm.certificate = reader.ReadBytes(len);
                 data.Add(itm);
 
             }

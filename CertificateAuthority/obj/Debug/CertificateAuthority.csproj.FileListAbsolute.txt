@@ -1,0 +1,11 @@
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\CertificateAuthority\bin\Debug\CertificateAuthority.exe.config
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\CertificateAuthority\bin\Debug\CertificateAuthority.exe
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\CertificateAuthority\bin\Debug\CertificateAuthority.pdb
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\CertificateAuthority\bin\Debug\Client.exe
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\CertificateAuthority\bin\Debug\Client.pdb
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\CertificateAuthority\obj\Debug\CertificateAuthority.csprojResolveAssemblyReference.cache
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\CertificateAuthority\obj\Debug\CertificateAuthority.Form1.resources
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\CertificateAuthority\obj\Debug\CertificateAuthority.Properties.Resources.resources
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\CertificateAuthority\obj\Debug\CertificateAuthority.csproj.GenerateResource.Cache
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\CertificateAuthority\obj\Debug\CertificateAuthority.exe
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\CertificateAuthority\obj\Debug\CertificateAuthority.pdb

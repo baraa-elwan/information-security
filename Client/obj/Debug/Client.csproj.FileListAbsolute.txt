@@ -1,0 +1,9 @@
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\Client\bin\Debug\Client.exe.config
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\Client\bin\Debug\Client.exe
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\Client\bin\Debug\Client.pdb
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\Client\obj\Debug\Client.CA_info.resources
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\Client\obj\Debug\Client.Form1.resources
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\Client\obj\Debug\Client.Properties.Resources.resources
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\Client\obj\Debug\Client.csproj.GenerateResource.Cache
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\Client\obj\Debug\Client.exe
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\Client\obj\Debug\Client.pdb

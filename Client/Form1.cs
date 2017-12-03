@@ -190,8 +190,8 @@ namespace Client
                         {
                             if (item.Text.Equals(sender))
                             {
-                                sender_public_key = getBytes(item.Value);
-                                sender_rsa.FromXmlString(item.Value);
+                                sender_public_key = getBytes(item.Value.publicKey);
+                                sender_rsa.FromXmlString(item.Value.publicKey);
                                 break;
                             }
                         }
@@ -234,7 +234,7 @@ namespace Client
                     {
                         SomeData itm = new SomeData();
                         itm.Text = streamR.ReadString();
-                        itm.Value = streamR.ReadString();
+                        //itm.Value = streamR.ReadString();
                         clientList.Add(itm);
                     }
 
@@ -254,7 +254,7 @@ namespace Client
             NetworkStream netstream = mclient.GetStream();
             try
             {
-                String key = clientList[reciever].Value;
+                String key = clientList[reciever].Value.publicKey;
                 lblStatus.Text = "Connected to the Server...\n";
 
                 String data = File.ReadAllText(SendingFilePath, Encoding.GetEncoding(20127));
@@ -349,8 +349,10 @@ namespace Client
 
         }
 
-
-
-
+        private void btn_CreateCertificate_Click(object sender, EventArgs e)
+        {
+            CA_info ca = new CA_info(rsaProvider.ToXmlString(false));
+            ca.Show();
+        }
     }
 }

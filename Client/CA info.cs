@@ -15,18 +15,26 @@ namespace Client
 {
     public partial class CA_info : Form
     {
-        public CA_info()
+        string clientPublicKey;
+        public CA_info(string PublicKey)
         {
+            clientPublicKey = PublicKey;
             InitializeComponent();
         }
 
         private void btn_SendCA_Click(object sender, EventArgs e)
         {
             string path = @"D://"+tBox_SiteName.Text+".cer";
-            string car = "Site Name : " + tBox_SiteName.Text + "\n"
-                    + "Country : " + tBox_Country.Text + "\n" +
-                    "City : " + tBox_City.Text;
-            
+            ////string car = "Site Name : " + tBox_SiteName.Text + "\n"
+            //        + "Country : " + tBox_Country.Text + "\n" +
+            //        "City : " + tBox_City.Text;
+            Certificate car = new Certificate()
+            {
+                siteName = tBox_SiteName.Text,
+                country=tBox_Country.Text,
+                city=tBox_City.Text,
+                publicKey= clientPublicKey
+            };
             BinaryWriter writer;
             BinaryReader reader;
 
@@ -36,9 +44,9 @@ namespace Client
             //reader = new BinaryReader(server_socket.GetStream());
             //send request
             writer.Write("car");
-            writer.Write(getBytes(car).Length);
-            writer.Write(getBytes(car));
-            writer.Close();
+            writer.Write(car.serilizeMessage().Length);
+            writer.Write(car.serilizeMessage());
+            writer.Close(); 
 
             //int len = reader.ReadInt32();
             //byte[] cer = reader.ReadBytes(len);

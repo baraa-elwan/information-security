@@ -9,7 +9,7 @@ namespace Server
     [Serializable()]
     public class SomeData
     {
-        public string Value { get; set; }
-        public byte[] certificate { get; set; }
+        public string Text { get; set; }
+        public byte[] Value { get; set; }
     }
 }

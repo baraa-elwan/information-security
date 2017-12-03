@@ -11,20 +11,21 @@ namespace Client
 {
    public class Certificate
     {
-        public String name { set; get; }
+        public String siteName { set; get; }
 
-        public String company { set; get; }
+        public String country { set; get; }
+        public String city { set; get; }
 
-       public String publicKey { set; get; }
+        public String publicKey { set; get; }
 
        
 
-        public Certificate(string name, string company, string pKey)
-        {
-            this.name = name;
-            this.company = company;
-            this.publicKey = pKey;
-        }
+        //public Certificate(string name, string company, string pKey)
+        //{
+        //    this.name = name;
+        //    this.company = company;
+        //    this.publicKey = pKey;
+        //}
 
         public byte[] serilizeMessage()
         {

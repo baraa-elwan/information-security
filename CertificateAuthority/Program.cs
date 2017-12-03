@@ -41,7 +41,7 @@ namespace CertificateAuthority
             }
 
             if (publicAndPrivateKey != String.Empty)
-                Application.Run(new Form1());
+                Application.Run(new Form1(publicAndPrivateKey));
             else
                 MessageBox.Show("Error in generate key.");
 

@@ -4,6 +4,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Net.Sockets;
 using System.IO;
+
 namespace Server
 {
     class Server
@@ -21,8 +22,8 @@ namespace Server
             writer.Write(data.Count);
             foreach (SomeData d in data)
             {
-                writer.Write(d.Text);
-                writer.Write(d.Value);
+                //writer.Write(d.Text);
+                //writer.Write(d.Value);
             }
 
             writer.Flush();

@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,9 +24,8 @@ namespace Client
 
         int reciever = -1;
 
-        bool connected = false;
-
         string username = String.Empty;
+        string company = String.Empty;
 
         RSACryptoServiceProvider rsaProvider = null;
 
@@ -63,33 +61,32 @@ namespace Client
             {
                 MessageBox.Show("enter Username please !");
             }
+            else if (txtIP.Text == String.Empty || txtPort.Text == String.Empty)
+            {
+                MessageBox.Show("enter Ip or port please !");
+            }
             else
-                if (txtIP.Text == String.Empty || txtPort.Text == String.Empty)
+            {
+                try
                 {
-                    MessageBox.Show("enter Ip or port please !");
-                }
-                else
-                {
-                    try
-                    {
-                        username = tBox_Username.Text;
-                        //start connection with button
-                        Directory.CreateDirectory("D://" + username);
-                        client.connect(txtIP.Text, Convert.ToInt32(txtPort.Text));
-                        client.sendUserData(username, rsaProvider.ToXmlString(false));
-                        recieveThread = new Thread(clientReceiver);
-                        recieveThread.Start();
-                        connection_stus.Text = "Connected";
-                        btn_connect.Enabled = false;
-                        connected = true;
-                        groupBox2.Enabled = true;
+                    username = tBox_Username.Text;
+                    //start connection with button
+                    Directory.CreateDirectory("D://" + username);
+                    client.connect(txtIP.Text, Convert.ToInt32(txtPort.Text));
+                    //TODO 
+                    client.sendUserData(username, rsaProvider.ToXmlString(false));
+                    recieveThread = new Thread(clientReceiver);
+                    recieveThread.Start();
+                    connection_stus.Text = "Connected";
+                    btn_connect.Enabled = false;
+                    groupBox2.Enabled = true;
 
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("error " + ex);
-                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("error " + ex);
+                }
+            }
         }
 
         private void btn_refreash_Click(object sender, EventArgs e)
@@ -208,17 +205,17 @@ namespace Client
 
                             client.saveFile(res, "D://" + username + "/" + m.file_name);
 
-                            FileStream stream = new FileStream("D://" + username + "/" + 
-                                Path.GetFileNameWithoutExtension(m.file_name) + ".sign",FileMode.OpenOrCreate);
+                            FileStream stream = new FileStream("D://" + username + "/" +
+                                Path.GetFileNameWithoutExtension(m.file_name) + ".sign", FileMode.OpenOrCreate);
 
                             stream.WriteByte(0);
-                            stream.Write(sender_public_key,0, sender_public_key.Length);
+                            stream.Write(sender_public_key, 0, sender_public_key.Length);
                             stream.WriteByte(1);
                             stream.Write(m.signature, 0, m.signature.Length);
                             stream.Close();
 
-                           
-                            
+
+
 
                         }
                         else
@@ -324,10 +321,7 @@ namespace Client
         }
         #endregion
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -343,7 +337,7 @@ namespace Client
             Dlg.Filter = "All Files (*.txt)|*.*";
             Dlg.CheckFileExists = true;
             Dlg.Title = "Choose a File";
-            string path = "D://"+username+"/";
+            string path = "D://" + username + "/";
             Dlg.InitialDirectory = @path;
             if (Dlg.ShowDialog() == DialogResult.OK)
             {
@@ -355,8 +349,10 @@ namespace Client
 
         }
 
-        
-
-       
+        private void button1_Click(object sender, EventArgs e)
+        {
+            CA_info ca = new CA_info();
+            ca.Show();
+        }
     }
 }

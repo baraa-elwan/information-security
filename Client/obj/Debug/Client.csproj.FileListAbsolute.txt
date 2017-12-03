@@ -15,3 +15,5 @@ D:\هندسة معلوماتية\السنة الخامسة\امن المعلوم
 D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\Client\obj\Debug\Client.csproj.GenerateResource.Cache
 D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\Client\obj\Debug\Client.exe
 D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\Client\obj\Debug\Client.pdb
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\Client\obj\Debug\Client.CA_info.resources

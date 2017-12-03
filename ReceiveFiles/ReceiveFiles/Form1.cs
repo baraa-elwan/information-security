@@ -135,7 +135,14 @@ namespace Server
                 data.Add(itm);
 
             }
-
+            else
+                if(option==99)
+                 {
+                    itm = new SomeData();
+                    itm.Value = reader.ReadString();
+                    itm.Text = "CA";
+                    data.Add(itm);
+                }   
 
             ShowData();
             //listen for messages   

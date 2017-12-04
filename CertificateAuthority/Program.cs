@@ -7,7 +7,7 @@ using Client;
 using System.Security.Cryptography;
 using System.IO;
 using System.Text;
-
+using Client;
 namespace CertificateAuthority
 {
     static class Program
@@ -18,13 +18,16 @@ namespace CertificateAuthority
         /// </summary>
         ///
         [STAThread]
+        public static RSAParameters privateKey ;
+        public static RSAParameters publicKey ;
+        
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             string path = @"D://CertificateAuthorityPublicAndPrivateKey.txt";
-            String publicAndPrivateKey;
+            bool flag;
 
             // This text is added only once to the file.
             if (!File.Exists(path))
@@ -32,15 +35,23 @@ namespace CertificateAuthority
                 // Create a file to write to.
                 int keySize = Convert.ToInt32(1024);
                 RSACryptoServiceProvider rsaProvider = AsymmetricEncryption.GenerateKeys(keySize);
-                publicAndPrivateKey = rsaProvider.ToXmlString(true);
-                File.WriteAllText(path, publicAndPrivateKey);
+               // publicAndPrivateKey = rsaProvider.ToXmlString(true);
+                publicKey = rsaProvider.ExportParameters(true);
+                privateKey = rsaProvider.ExportParameters(false);
+                BinaryWriter file = new BinaryWriter(new FileStream(path, FileMode.OpenOrCreate));
+                file.Write(Client.Form1.getString(Helper.Serilize(publicKey)));
+                file.Write(Client.Form1.getString(Helper.Serilize(privateKey)));
+                flag = true;
             }
             else
             {
-                publicAndPrivateKey = File.ReadAllText(path, Encoding.GetEncoding(20127));
+                BinaryReader file = new BinaryReader(new FileStream(path, FileMode.Open));
+                privateKey = (RSAParameters)Helper.deSerilize(Client.Form1.getBytes(file.ReadString()));
+                publicKey = (RSAParameters)Helper.deSerilize(Client.Form1.getBytes(file.ReadString()));
+                flag = true;
             }
 
-            if (publicAndPrivateKey != String.Empty)
+            if (flag)
                 Application.Run(new Form1());
             else
                 MessageBox.Show("Error in generate key.");

@@ -108,14 +108,6 @@ namespace Server
         {
             ShowData();
         }
-    
-
-
-
- 
-       
-
-
 
 
         void process_client()
@@ -126,32 +118,25 @@ namespace Server
             BinaryReader reader = new BinaryReader(stream);
             int option = reader.ReadInt32();
 
-            if (option == 99)
-            {
+            if (option == 99){
                 CA = reader.ReadString();
                 return;
             }
 
             clients.Add(mClient);
 
-           
-
             SomeData itm = null;
-            if (option == 1)
-            {
+            if (option == 1){
                 itm = new SomeData();
                 itm.Value = reader.ReadString();
                 int len = reader.ReadInt32();
                 itm.certificate = reader.ReadBytes(len);
                 data.Add(itm);
-
             }
-            else
-                if(option==99)
-                 {
+            else if(option==99) {
                     itm = new SomeData();
                     itm.Value = reader.ReadString();
-                    itm.Text = "CA";
+                    //TODO itm.Text = "CA";
                     data.Add(itm);
                 }   
 
@@ -189,7 +174,7 @@ namespace Server
 
                         BinaryWriter recW = new BinaryWriter(rec);
 
-                        recW.Write(itm.Text);
+                        //TODO recW.Write(itm.Text);
                         recW.Write(msg.Length);
                         recW.Write(msg);
                         recW.Flush();

@@ -1,10 +1,3 @@
-C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\bin\Debug\ReceiveFiles.exe
-C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\bin\Debug\ReceiveFiles.pdb
-C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\Server.Form1.resources
-C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.Properties.Resources.resources
-C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\Server.csproj.GenerateResource.Cache
-C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.exe
-C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.pdb
 D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.exe
 D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.pdb
 D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\ReceiveFiles\ReceiveFiles\bin\Debug\ReceiveFiles.exe
@@ -13,3 +6,10 @@ D:\هندسة معلوماتية\السنة الخامسة\امن المعلوم
 D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\ReceiveFiles\ReceiveFiles\obj\Debug\Server.Form1.resources
 D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.Properties.Resources.resources
 D:\هندسة معلوماتية\السنة الخامسة\امن المعلومات\المرحلة الثانيةinformation-security\ReceiveFiles\ReceiveFiles\obj\Debug\Server.csproj.GenerateResource.Cache
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\bin\Debug\ReceiveFiles.exe
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\bin\Debug\ReceiveFiles.pdb
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\Server.Form1.resources
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.Properties.Resources.resources
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\Server.csproj.GenerateResource.Cache
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.exe
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\ReceiveFiles\ReceiveFiles\obj\Debug\ReceiveFiles.pdb

@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
+
 namespace Client
 {
     public partial class Form1 : Form
@@ -30,8 +31,6 @@ namespace Client
         RSACryptoServiceProvider rsaProvider = null;
 
         List<SomeData> clientList = new List<SomeData>();
-
-        int selected_file = -1;
 
         Thread recieveThread = null;
 
@@ -188,7 +187,7 @@ namespace Client
                         byte[] sender_public_key = null;
                         foreach (SomeData item in clientList)
                         {
-                            if (item.Text.Equals(sender))
+                           //TODO  if (item.Text.Equals(sender))
                             {
                                 sender_public_key = getBytes(item.Value);
                                 sender_rsa.FromXmlString(item.Value);
@@ -233,7 +232,7 @@ namespace Client
                     for (int i = 0; i < len; i++)
                     {
                         SomeData itm = new SomeData();
-                        itm.Text = streamR.ReadString();
+                       //TODO  itm.Text = streamR.ReadString();
                         itm.Value = streamR.ReadString();
                         clientList.Add(itm);
                     }
@@ -322,7 +321,6 @@ namespace Client
         #endregion
 
         
-
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             new BinaryWriter(client.socket.GetStream()).Write(4);
@@ -348,9 +346,6 @@ namespace Client
 
 
         }
-
-
-
 
     }
 }

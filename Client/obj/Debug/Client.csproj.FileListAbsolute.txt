@@ -7,3 +7,4 @@ C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\Client\obj\Debug\C
 C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\Client\obj\Debug\Client.csproj.GenerateResource.Cache
 C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\Client\obj\Debug\Client.exe
 C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\Client\obj\Debug\Client.pdb
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache

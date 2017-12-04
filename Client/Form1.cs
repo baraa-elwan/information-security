@@ -14,8 +14,11 @@ namespace Client
 {
     public partial class Form1 : Form
     {
+
         #region members
         public string SendingFilePath = string.Empty;
+        
+        public string certPath;
 
         public string VerfyFilePath = string.Empty;
 
@@ -51,6 +54,8 @@ namespace Client
             list_Clients.ValueMember = "Value";
             list_Clients.DisplayMember = "Text";
             list_Clients.DataSource = clientList;
+            client.sendUserData(username, rsaProvider.ToXmlString(false), File.ReadAllText(certPath));
+            recieveThread = new Thread(clientReceiver);
         }
 
 
@@ -73,8 +78,7 @@ namespace Client
                     Directory.CreateDirectory("D://" + username);
                     client.connect(txtIP.Text, Convert.ToInt32(txtPort.Text));
                     //TODO 
-                    client.sendUserData(username, rsaProvider.ToXmlString(false));
-                    recieveThread = new Thread(clientReceiver);
+                   
                     recieveThread.Start();
                     connection_stus.Text = "Connected";
                     btn_connect.Enabled = false;
@@ -146,7 +150,7 @@ namespace Client
         {
             TcpClient socket = this.client.socket;
 
-            int reqLen = getBytes("msg").Length;
+            int reqLen = Helper.getBytes("msg").Length;
             byte[] req = new byte[reqLen];
             while (socket.Connected)
             {
@@ -155,7 +159,7 @@ namespace Client
                 socket.Client.Receive(req);
 
                 BinaryReader streamR = new BinaryReader(netStream);
-                if (getString(req).Equals("msg"))
+                if (Helper.getString(req).Equals("msg"))
                 {
                     string message = "Accept the Incoming File from ";
 
@@ -178,7 +182,7 @@ namespace Client
                         RecData = streamR.ReadBytes(dataLen);
 
                         //SaveFileName = streamR.ReadString();
-                        Message m = Message.deSerilizeMessage(RecData);
+                        Message m = (Message)Helper.deSerilize(RecData);
 
                         byte[] hash_data = new SHA1Managed().ComputeHash(m.msg);
 
@@ -225,7 +229,7 @@ namespace Client
                     }
 
                 }
-                else
+                else if (Helper.getString(req).Equals("lst"))
                 {
                     clientList.Clear();
                     int len = streamR.ReadInt32();
@@ -241,7 +245,19 @@ namespace Client
 
                     this.Invoke((MethodInvoker)(() => ShowData()));
                 }
+                else if (Helper.getString(req).Equals("cer"))
+                {
+                     certPath = "D://"+username +"/"+ ca.certificate.siteName.ToString()+".cer";
+                    File.Create(certPath);
+                    File.WriteAllText(certPath,streamR.ReadString());
+
+                    string authonticate = "D://" + username + "/authonticate.pk";
+                    File.WriteAllText(certPath, streamR.ReadString());
+
+                }
+               
             }
+           
 
         }
 
@@ -276,7 +292,7 @@ namespace Client
                 BinaryWriter writer = new BinaryWriter(netstream);
 
 
-                byte[] msg = Message.serilizeMessage(myMsg);
+                byte[] msg = Helper.Serilize(myMsg);
 
                 writer.Write(3);
 
@@ -311,15 +327,6 @@ namespace Client
 
         }
 
-        public static byte[] getBytes(String str)
-        {
-            return Encoding.UTF8.GetBytes(str);
-        }
-
-        public static String getString(byte[] bytes)
-        {
-            return Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-        }
         #endregion
 
         
@@ -347,12 +354,31 @@ namespace Client
 
 
         }
-
+        CA_info ca;
         private void btn_CreateCertificate_Click(object sender, EventArgs e)
         {
-            CA_info ca = new CA_info(rsaProvider.ToXmlString(false));
+            ca = new CA_info(rsaProvider.ToXmlString(false));
+
+            ca.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.send_certificate);
             ca.Show();
+
+            
         }
+
+        private void send_certificate(object sender, EventArgs e)
+        {
+            Certificate certificate = ca.certificate;
+            this.client.connect("127.0.0.", 9999);
+            BinaryWriter writer = new BinaryWriter(client.socket.GetStream());
+            byte[] msg = Helper.Serilize(certificate);
+            writer.Write(msg.Length);
+            writer.Write(msg);
+            writer.Close();
+            this.client.disconnect();
+
+        }
+
+       
 
     }
 }

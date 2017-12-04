@@ -44,6 +44,7 @@ namespace CertificateAuthority
             writer.Write(rsaProvider.ToXmlString(false));
             writer.Close();
             server_socket.Close();
+            //
 
             ThreadStart Ts = new ThreadStart(ReceiveTCP);
             T = new Thread(Ts);
@@ -77,34 +78,37 @@ namespace CertificateAuthority
 
         void createCertificate()
         {
-            while (client.Connected)
+            TcpClient mClient = client;
+            while (mClient.Connected)
             {
 
-                reader = new BinaryReader(client.GetStream());
+
+                reader = new BinaryReader(mClient.GetStream());
 
                 string option = reader.ReadString();
-                if (option == "car")
+
+                int len = reader.ReadInt32();
+                byte[] cer = reader.ReadBytes(len);
+
+
+                Certificate certificate = (Certificate)Helper.deSerilizeMessage(cer);
+
+                DialogResult result = MessageBox.Show(
+                        "authinticate " + certificate.siteName + "." + certificate.country + "",
+                        "new request",
+                        MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
                 {
-                    int len = reader.ReadInt32();
-                    byte[] cer = reader.ReadBytes(len);
+                    //byte[] cert = rsaProvider.SignHash(sha.ComputeHash(cer), CryptoConfig.MapNameToOID("SHA1"));
+                    mClient.Client.Send(Helper.getBytes("cer"));
+                    byte[] cert = rsaProvider.SignData(cer, new SHA1CryptoServiceProvider());
 
-
-                    Certificate certificate = Certificate.deSerilizeMessage(cer);
-
-                    DialogResult result = MessageBox.Show(
-                            "authinticate " + certificate.siteName + "." + certificate.country + "",
-                            "new request",
-                            MessageBoxButtons.YesNo);
-
-                    if (result == DialogResult.Yes)
-                    {
-                        //byte[] cert = rsaProvider.SignHash(sha.ComputeHash(cer), CryptoConfig.MapNameToOID("SHA1"));
-                        byte[] cert = rsaProvider.SignData(cer, new SHA1CryptoServiceProvider());
-                        writer.Write(cert.Length);
-                        writer.Write(cert);
-                        writer.Close();
-                    }
+                    writer.Write(Helper.getString(cert));
+                    writer.Write(rsaProvider.ToXmlString(false));
+                    writer.Close();
                 }
+
             }
 
         }

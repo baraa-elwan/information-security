@@ -10,6 +10,7 @@ namespace Server
     public class SomeData
     {
         public string Text { get; set; }
-        public byte[] Value { get; set; }
+        public string PK { get; set; }
+        public string certificate { get; set; }
     }
 }

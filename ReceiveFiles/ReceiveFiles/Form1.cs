@@ -13,20 +13,26 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
-//using System.Runtime.Serialization.Formatters.Soap;
 
 namespace Server
 {
 
     public partial class Form1 : Form
     {
-        private const int BufferSize = 10000;
-        public string Status = string.Empty;
-        TcpClient client = null;
-        public Thread T = null;
-        List<SomeData> data=new List<SomeData>();
-        List<TcpClient> clients = new List<TcpClient>();
+
+        public string Status = string.Empty; //status of connection
+        
+        TcpClient client = null;// object for recieving sockets
+        
+        public Thread T = null; // listening thread
+       
+        List<SomeData> data=new List<SomeData>(); //list of informations of connected clients 
+
+        List<TcpClient> clients = new List<TcpClient>();//list of connected clients 
+
+
         TcpListener Listener = null;
+        
         String CA = String.Empty;
 
         public Form1()
@@ -38,19 +44,15 @@ namespace Server
         private void Form1_Load(object sender, EventArgs e)
         {
             label1.Text = "Server is Running...";
+
+            // start listening thread
             ThreadStart Ts = new ThreadStart(StartReceiving);
             T = new Thread(Ts);
             T.Start();
             data.Clear();   
         }
 
-        //start main thread
-        public void StartReceiving()
-        {
-           
-            ReceiveTCP(8888);
-        }
-
+       //show client list on form
         public void ShowData()
         {
             listBox1.DataSource = null;
@@ -59,7 +61,8 @@ namespace Server
             listBox1.DataSource = data;
         }
 
-        public void ReceiveTCP(int portN)
+        //listening action
+        public void StartReceiving()
         {
             
             try
@@ -77,6 +80,7 @@ namespace Server
 
                 if (Listener.Pending())
                 {
+                    //Accept new socket and start thread for connection
                     client = Listener.AcceptTcpClient();
 
                     Thread thread = new Thread(process_client);
@@ -88,16 +92,7 @@ namespace Server
 
         
 
-        
-        public static byte[] getBytes(String str)
-        {
-            return Encoding.UTF8.GetBytes(str);
-        }
 
-        public static String getString(byte[] bytes)
-        {
-            return Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-        }
         private void btnExit_Click(object sender, EventArgs e)
         {
             T.Abort();
@@ -151,7 +146,7 @@ namespace Server
 
                     if (option == 2)
                     {
-                        byte[] b = getBytes("lst");
+                        byte[] b = Helper.getBytes("lst");
                         mClient.Client.Send(b);
                         Server.SendToClient(mClient, data);
                     }
@@ -170,7 +165,7 @@ namespace Server
 
                         NetworkStream rec = reciever.GetStream();
 
-                        reciever.Client.Send(getBytes("msg"));
+                        reciever.Client.Send(Helper.getBytes("msg"));
 
 
                         BinaryWriter recW = new BinaryWriter(rec);

@@ -9,10 +9,8 @@ namespace Client
     [Serializable()]
     public class SomeData
     {
-
-        //certificate
-        public Certificate Value { get; set; }
         public string Text { get; set; }
-
+        public string PK { get; set; }
+        public string certificate { get; set; }
     }
 }

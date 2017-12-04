@@ -52,7 +52,7 @@ namespace Client
         }
 
         #region register client on the network
-        public void sendUserData(string UName, string PublicK)
+        public void sendUserData(string UName, string PublicK, string certificate)
         {
 
             try
@@ -61,6 +61,7 @@ namespace Client
                 writer.Write(1);
                 writer.Write(PublicK);
                 writer.Write(UName);
+                writer.Write(certificate);
                 writer.Flush();
 
             }

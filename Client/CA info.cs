@@ -15,6 +15,7 @@ namespace Client
 {
     public partial class CA_info : Form
     {
+        public Certificate certificate { set; get; }
         string clientPublicKey;
         public CA_info(string PublicKey)
         {
@@ -28,39 +29,14 @@ namespace Client
             ////string car = "Site Name : " + tBox_SiteName.Text + "\n"
             //        + "Country : " + tBox_Country.Text + "\n" +
             //        "City : " + tBox_City.Text;
-            Certificate car = new Certificate()
+            certificate = new Certificate()
             {
                 siteName = tBox_SiteName.Text,
                 country=tBox_Country.Text,
                 city=tBox_City.Text,
                 publicKey= clientPublicKey
             };
-            BinaryWriter writer;
-            BinaryReader reader;
-
-            TcpClient server_socket = new TcpClient();
-            server_socket.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 9999);
-            writer = new BinaryWriter(server_socket.GetStream());
-            //reader = new BinaryReader(server_socket.GetStream());
-            //send request
-            writer.Write("car");
-            writer.Write(car.serilizeMessage().Length);
-            writer.Write(car.serilizeMessage());
-            writer.Close(); 
-
-            //int len = reader.ReadInt32();
-            //byte[] cer = reader.ReadBytes(len);
-
-            //if (!File.Exists(path))
-            //{
-            //    File.WriteAllText(path, getString(cer));
-            //}
-            //else
-            //{
-            //    MessageBox.Show("the site have certifate");
-            //}
-
-            server_socket.Close();
+            this.Close();
 
             //MessageBox.Show("congratulation! \nyou get the certificate: " + getString(cer));
         }

@@ -20,13 +20,10 @@ namespace CertificateAuthority
         TcpListener listener;
         TcpClient client;
         RSACryptoServiceProvider rsaProvider;
+        public Thread T = null;
         SHA1Managed sha;
         BinaryReader reader;
         BinaryWriter writer;
-
-        Thread thread;
-
-
         public Form1()
         {
             InitializeComponent();
@@ -48,24 +45,46 @@ namespace CertificateAuthority
             writer.Close();
             server_socket.Close();
 
-            listener = new TcpListener(System.Net.IPAddress.Parse("127.0.0.1"), 9999);
-            listener.Start();
-            thread = new Thread(createCertificate);
-            thread.Start();
+            ThreadStart Ts = new ThreadStart(ReceiveTCP);
+            T = new Thread(Ts);
+            T.Start();
         }
 
-
-        public void createCertificate()
+        public void ReceiveTCP()
         {
-            while (true)
+            try
+            {
+                listener = new TcpListener(System.Net.IPAddress.Parse("127.0.0.1"), 9999);
+                listener.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            for (; ; )
             {
                 if (listener.Pending())
                 {
+                    client = new TcpClient();
                     client = listener.AcceptTcpClient();
-                    // NetworkStream stream = client.GetStream();
-                    reader = new BinaryReader(client.GetStream());
-                    writer = new BinaryWriter(client.GetStream());
-                    reader.Close();
+                    Thread thread = new Thread(createCertificate);
+                    thread.Start();
+
+                }
+            }
+        }
+
+        void createCertificate()
+        {
+            while (client.Connected)
+            {
+
+                reader = new BinaryReader(client.GetStream());
+
+                string option = reader.ReadString();
+                if (option == "car")
+                {
                     int len = reader.ReadInt32();
                     byte[] cer = reader.ReadBytes(len);
 
@@ -73,28 +92,21 @@ namespace CertificateAuthority
                     Certificate certificate = Certificate.deSerilizeMessage(cer);
 
                     DialogResult result = MessageBox.Show(
-                          "authinticate " + certificate.name + "@" + certificate.company + ".com",
-                          "new request",
-                          MessageBoxButtons.YesNo);
+                            "authinticate " + certificate.siteName + "." + certificate.country + "",
+                            "new request",
+                            MessageBoxButtons.YesNo);
 
                     if (result == DialogResult.Yes)
                     {
                         //byte[] cert = rsaProvider.SignHash(sha.ComputeHash(cer), CryptoConfig.MapNameToOID("SHA1"));
                         byte[] cert = rsaProvider.SignData(cer, new SHA1CryptoServiceProvider());
-                        writer.Write(Client.Form1.getString(cert));
+                        writer.Write(cert.Length);
+                        writer.Write(cert);
                         writer.Close();
                     }
-
                 }
-
             }
+
         }
-
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            thread.Abort();
-        }
-
-
     }
 }

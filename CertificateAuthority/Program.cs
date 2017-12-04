@@ -7,7 +7,7 @@ using Client;
 using System.Security.Cryptography;
 using System.IO;
 using System.Text;
-using Client;
+
 namespace CertificateAuthority
 {
     static class Program
@@ -17,7 +17,6 @@ namespace CertificateAuthority
         /// The main entry point for the application.
         /// </summary>
         ///
-        [STAThread]
         public static RSAParameters privateKey ;
         public static RSAParameters publicKey ;
         
@@ -50,6 +49,7 @@ namespace CertificateAuthority
                 publicKey = (RSAParameters)Helper.deSerilize(Client.Form1.getBytes(file.ReadString()));
                 flag = true;
             }
+
 
             if (flag)
                 Application.Run(new Form1());

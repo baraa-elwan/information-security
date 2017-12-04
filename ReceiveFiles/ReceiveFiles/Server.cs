@@ -22,8 +22,9 @@ namespace Server
             writer.Write(data.Count);
             foreach (SomeData d in data)
             {
-               //TODO  writer.Write(d.Text);
-                writer.Write(d.Value);
+
+                //writer.Write(d.Text);
+                //writer.Write(d.Value);
             }
 
             writer.Flush();

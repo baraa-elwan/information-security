@@ -1,6 +1,7 @@
 C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\Client\bin\Debug\Client.exe.config
 C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\Client\bin\Debug\Client.exe
 C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\Client\bin\Debug\Client.pdb
+C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\Client\obj\Debug\Client.CA_info.resources
 C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\Client\obj\Debug\Client.Form1.resources
 C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\Client\obj\Debug\Client.Properties.Resources.resources
 C:\Users\baraa\Documents\Visual Studio 2017\Projects\Session2\Client\obj\Debug\Client.csproj.GenerateResource.Cache

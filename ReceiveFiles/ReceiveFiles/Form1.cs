@@ -128,15 +128,16 @@ namespace Server
             SomeData itm = null;
             if (option == 1){
                 itm = new SomeData();
-                itm.Value = reader.ReadString();
+                //itm.Value = reader.ReadString();
                 int len = reader.ReadInt32();
-                itm.certificate = reader.ReadBytes(len);
+                //itm.certificate = reader.ReadBytes(len);
                 data.Add(itm);
             }
             else if(option==99) {
                     itm = new SomeData();
-                    itm.Value = reader.ReadString();
-                    //TODO itm.Text = "CA";
+
+                    //itm.Value = reader.ReadString();
+                    //itm.Text = "CA";
                     data.Add(itm);
                 }   
 
@@ -175,6 +176,7 @@ namespace Server
                         BinaryWriter recW = new BinaryWriter(rec);
 
                         //TODO recW.Write(itm.Text);
+
                         recW.Write(msg.Length);
                         recW.Write(msg);
                         recW.Flush();

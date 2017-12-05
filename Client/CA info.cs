@@ -16,29 +16,57 @@ namespace Client
     public partial class CA_info : Form
     {
         public Certificate certificate { set; get; }
-        string clientPublicKey;
-        public CA_info(string PublicKey)
+        TcpClient client;
+        string clientPublicKey { set; get; }
+        ClientForm s;
+        public string pk;
+        public CA_info(string pk, ClientForm s)
         {
-            clientPublicKey = PublicKey;
+            this.s = s;
+            clientPublicKey = pk;
             InitializeComponent();
         }
 
         private void btn_SendCA_Click(object sender, EventArgs e)
         {
-            string path = @"D://"+tBox_SiteName.Text+".cer";
-            ////string car = "Site Name : " + tBox_SiteName.Text + "\n"
-            //        + "Country : " + tBox_Country.Text + "\n" +
-            //        "City : " + tBox_City.Text;
+            string path = @"D://" + tBox_SiteName.Text + ".cer";
+
             certificate = new Certificate()
             {
                 siteName = tBox_SiteName.Text,
-                country=tBox_Country.Text,
-                city=tBox_City.Text,
-                publicKey= clientPublicKey
+                country = tBox_Country.Text,
+                city = tBox_City.Text,
+                publicKey = clientPublicKey
             };
+
+            client = new TcpClient();
+
+            try
+            {
+                client.Connect(System.Net.IPAddress.Parse("127.0.0.1"), 9999);
+                BinaryWriter writer = new BinaryWriter(client.GetStream());
+                BinaryReader reader = new BinaryReader(client.GetStream());
+                byte[] msg = Helper.Serilize(certificate);
+                writer.Write(msg.Length);
+                writer.Write(msg);
+                writer.Flush();
+
+                s.info = new SomeData();
+                int l = reader.ReadInt32();
+
+                s.info.certificate = reader.ReadBytes(l);
+                s.CA = reader.ReadString();
+            
+                s.info.info = certificate;
+
+            }
+            catch
+            {
+
+            }
+
             this.Close();
 
-            //MessageBox.Show("congratulation! \nyou get the certificate: " + getString(cer));
         }
 
         public static byte[] getBytes(String str)

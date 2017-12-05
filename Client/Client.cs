@@ -52,16 +52,15 @@ namespace Client
         }
 
         #region register client on the network
-        public void sendUserData(string UName, string PublicK, string certificate)
+        public void sendUserData(SomeData infoe)
         {
 
             try
             {
-               
+                byte[] b = Helper.Serilize(infoe);
                 writer.Write(1);
-                writer.Write(PublicK);
-                writer.Write(UName);
-                writer.Write(certificate);
+                writer.Write(b.Length);
+                writer.Write(b);
                 writer.Flush();
 
             }
@@ -74,7 +73,7 @@ namespace Client
 
 
         #region send "get client" request
-        public void sendReq()
+        public void request_client_list()
         {
         
             writer.Write(2);

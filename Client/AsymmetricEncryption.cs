@@ -20,11 +20,29 @@ namespace Client
         }
         #endregion
 
+        public static byte[] signData(RSACryptoServiceProvider rsaProvider,out byte[] encrypted, string data, int keySize, string key)
+        {
+            SHA1Managed shaHashing = new SHA1Managed();
+
+            encrypted = AsymmetricEncryption.PGPEncrypt(data, keySize, key);
+
+            byte[] hashed_msg = shaHashing.ComputeHash(encrypted);
+
+            return rsaProvider.SignHash(hashed_msg, CryptoConfig.MapNameToOID("SHA1"));
+        }
+
+        public static bool verifyMsg(string publicKey, Message m)
+        {
+            byte[] hash_data = new SHA1Managed().ComputeHash(m.msg);
+            RSACryptoServiceProvider sender_rsa = new RSACryptoServiceProvider();
+            sender_rsa.FromXmlString(publicKey);
+            return sender_rsa.VerifyHash(hash_data, CryptoConfig.MapNameToOID("SHA1"), m.signature);
+        }
+
         #region PGP Method
         public static byte[] PGPEncrypt(string message, int keySize, string publicKeyXml)
         {
 
-            //TODO
             byte[] data = Encoding.UTF8.GetBytes(message);
             SymmetricEncryption encryption = new SymmetricEncryption();
 
@@ -46,7 +64,7 @@ namespace Client
 
         public static String PGPDecrypt(byte[] msg, string publicAndPrivateKey)
         {
-            //TODO
+           
 
             byte[] key = new byte[128];
             byte[] ms = new byte[msg.Length - 128];

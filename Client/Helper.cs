@@ -7,19 +7,20 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
 
 namespace Client
 {
     public static class Helper
     {
-
-        
         public static byte[] Serilize(Object obj)
         {
             MemoryStream stream = new MemoryStream();
             IFormatter formatter = new BinaryFormatter();
             formatter.Serialize(stream, obj);
-           return stream.ToArray();
+            byte[] s = stream.ToArray();
+            stream.Close();
+            return s;
         }
 
         public static Object deSerilize(byte[] data)
@@ -38,6 +39,21 @@ namespace Client
         public static String getString(byte[] bytes)
         {
             return Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+        }
+
+
+        public static string ShowDialogue(string directory)
+        {
+            OpenFileDialog Dlg = new OpenFileDialog();
+            Dlg.Filter = "All Files (*.txt)|*.txt";
+            Dlg.CheckFileExists = true;
+            Dlg.Title = "Choose a File";
+            Dlg.InitialDirectory = @directory;
+            if (Dlg.ShowDialog() == DialogResult.OK)
+            {
+                return Dlg.FileName;
+            }
+            return String.Empty;
         }
     }
 }

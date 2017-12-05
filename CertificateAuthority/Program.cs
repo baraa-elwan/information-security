@@ -7,6 +7,8 @@ using Client;
 using System.Security.Cryptography;
 using System.IO;
 using System.Text;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace CertificateAuthority
 {
@@ -17,15 +19,16 @@ namespace CertificateAuthority
         /// The main entry point for the application.
         /// </summary>
         ///
-        public static RSAParameters privateKey ;
-        public static RSAParameters publicKey ;
-        
+       public static string publicAndprivateKey;
+       public static RSAParameters pu;
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             string path = @"D://CertificateAuthorityPublicAndPrivateKey.txt";
+            
+
             bool flag;
 
             // This text is added only once to the file.
@@ -34,25 +37,30 @@ namespace CertificateAuthority
                 // Create a file to write to.
                 int keySize = Convert.ToInt32(1024);
                 RSACryptoServiceProvider rsaProvider = AsymmetricEncryption.GenerateKeys(keySize);
-               // publicAndPrivateKey = rsaProvider.ToXmlString(true);
-                publicKey = rsaProvider.ExportParameters(true);
-                privateKey = rsaProvider.ExportParameters(false);
-                BinaryWriter file = new BinaryWriter(new FileStream(path, FileMode.OpenOrCreate));
-                file.Write(Client.Form1.getString(Helper.Serilize(publicKey)));
-                file.Write(Client.Form1.getString(Helper.Serilize(privateKey)));
+                publicAndprivateKey = rsaProvider.ToXmlString(true);
+                pu = rsaProvider.ExportParameters(true);
+                Stream stream = new FileStream(path,FileMode.Create);
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, pu);
+
+                stream.Close();
                 flag = true;
+
             }
             else
             {
-                BinaryReader file = new BinaryReader(new FileStream(path, FileMode.Open));
-                privateKey = (RSAParameters)Helper.deSerilize(Client.Form1.getBytes(file.ReadString()));
-                publicKey = (RSAParameters)Helper.deSerilize(Client.Form1.getBytes(file.ReadString()));
+                Stream stream = new FileStream(path, FileMode.Open);
+                IFormatter formatter = new BinaryFormatter();
+                stream.Seek(0, SeekOrigin.Begin);
+                pu = (RSAParameters)formatter.Deserialize(stream);
                 flag = true;
+                stream.Close();
+
             }
 
 
             if (flag)
-                Application.Run(new Form1());
+                Application.Run(new CAForm());
             else
                 MessageBox.Show("Error in generate key.");
 
